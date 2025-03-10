@@ -1,0 +1,105 @@
+p {
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 1.45em;
+}
+
+.breakPoint {
+    margin: 2%;
+}
+
+
+
+
+/* adds a border to the form */
+form {
+    border: 3px solid #f1f1f1;
+    margin-bottom: 7%;
+    padding-bottom: 4%;
+  }
+  
+  /* inputs for username and password */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 0.89em;
+  }
+
+
+    /* inputs for submit button - login page */
+input[type=submit] {
+    border: solid #34516C;
+    border-radius: 16px;
+    outline: 0;
+    padding: 8px;
+    color: white;
+    background-color: #34516C;
+    text-align: center;
+    width: 100%;
+    font-size: 0.9em;
+    justify-content: center;
+  }
+
+  /* adds opacity on hover of submit button */
+  input[type=submit]:hover{
+    opacity: 0.8;
+  }
+
+  /* styles all buttons */
+  button {
+    cursor: pointer;
+
+    border: solid #34516C;
+    border-radius: 16px;
+    outline: 0;
+    padding: 8px;
+    color: white;
+    background-color: #34516C;
+    text-align: center;
+    width: 100%;
+    font-size: 1em;
+    margin: auto;
+  }
+
+  /* buttons hover effect - all */
+button:hover {
+    opacity: 0.8;
+  }
+
+  /* style the image container in login page*/
+#loginImage {
+    padding-top: 2%;
+    text-align: center;
+    margin: auto;
+    
+}
+
+/* style the avatar image in login page */
+#loginAvatarImg {
+    border: solid #34516C;
+    border-radius: 100px;
+    box-shadow: #c7c6c6;
+    height: 17%;
+}
+
+  /* styling all containers */
+.container {
+    padding: 2%;
+}
+
+/* the "Forgot password" text */
+span.password {
+    float: right;
+    margin-top: 1%;
+    margin-bottom: 4.6%;
+}
+
+/* the "Forgot password" text */
+span.register {
+    float: left;
+    margin-top: 1%;
+    margin-bottom: 4.6%;
+}
