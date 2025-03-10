@@ -10,7 +10,7 @@ Email: EASells@uclan.ac.uk
 
 <head>
     <!-- link to stylesheets -->
-     <link rel="stylesheet" href="styling/loginStyle.css" type= "text/css">
+     <link rel="stylesheet" href="styling\loginRegisterStyle.css" type= "text/css">
 </head>
 
 <body>
@@ -20,29 +20,52 @@ Email: EASells@uclan.ac.uk
 
     <h1>Register Now</h1>
 
-    <!-- <form id="login" action="action_page.php" method="post">
+    <form id="registerForm" action="registerActionPage.php" method="post" onsubmit="return checkPasswords()">
 
-        <section id="loginSection" class="container">
-            <p>Enter your username and password to proceed:</p>
+        <section id="registerSection" class="container">
+            <p>Enter your details below:</p>
             
-            <p><label>Username:</label>
-            <input type="text" name="username" required></p>
+            <p><label>Full Name:</label>
+            <input type="text" name="fullName" required></p>
+
+            <p><label>Email:</label>
+            <input type="text" name="email" required></p>
+
+            <p><label>Address:</label>
+            <input type="text" name="address" required></p>
             
             <p><label>Password:</label>
             <input type='password' name="password" required></p>
+
+            <p><label>Confirm Password:</label>
+            <input type='password' name="confirmPassword" required></p>
             
-            <p><input type="submit" name="Log Me In"></p>
+            <p><input type="submit" name="Sign Up"></p>
 
-            <input type="checkbox" checked="checked" name="remember"> Remember me</label>
         </section>
+    </form>
 
-        <section id="forgotAndRegister" class="container">
-            <button type="button" class="cancelbtn">Cancel</button>
-            <span class="password">Forgot <a href="register.php">password?</a></span>
-            <span class="register">Not got an account? <a href="#">Register Now</a></span>
-        </section>
-        
-    </form> -->
+    <script>
+
+        function checkPasswords()
+        {
+            var passwordData = document.forms["registerForm"]["password"].value;
+            var confirmPasswordData = document.forms["registerForm"]["confirmPassword"].value;
+
+            if (passwordData != confirmPasswordData) // if passwords don't match, display error and return false;
+            {
+                alert("Passwords must match!");
+                return false;
+            }
+            else // if password and confirm password match, return true
+            {
+                return true;
+            }
+
+
+        }
+
+    </script>
 
 </body>
 
