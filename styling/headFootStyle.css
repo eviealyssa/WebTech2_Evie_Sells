@@ -1,0 +1,298 @@
+/* style sheet for header and footer */
+
+/* css applied to everything / all screens */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 300px;
+}
+
+/* nav bar */
+nav {
+    width: 100%;
+    height: auto;
+    position: sticky;
+    background-color: #919CAD; /* Silver from colour palette */
+}
+
+.logo {
+    padding-left: 10px;
+    padding-right: 25px;
+    padding-top: 5px;
+    float: left;
+}
+
+/* navigation links container */
+.navLinksList {
+    position: relative;
+    list-style-type: none;
+    padding: 20px;
+}
+
+/* actual navigation links */
+.navLinks {
+    list-style-type: none;
+    text-decoration: none;
+    font-size: 1.65em;
+    font-weight: 480;
+    padding-right: 15px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, 'Geneva', Verdana, sans-serif;
+}
+
+/* spilts navigation so icon is on the far right */
+.splitNav {
+    float: right;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+/* when link is hovered over - underline */
+.navLinks:hover {
+    text-decoration: underline;
+}
+
+/* when icon is hovered over - change opacity */
+.splitNav:hover {
+    opacity: 0.8;
+}
+
+/* highlights which page is currently active by underlining it */
+.activePage {
+    text-decoration: underline;
+}
+
+
+
+/* css for footer */
+footer {
+    display: grid;
+    gap: 1px 3px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #34516C;
+    color: #C7CBDA;
+    text-align: left;
+}
+    
+#emailAddress {
+    color: #C7CBDA;
+}
+    
+.iconsFooter {
+    display: block;
+    margin: auto;
+    width: 100%;
+}
+    
+.socialMediaIcons a {
+    text-decoration: none;
+} 
+
+
+
+/* css for mobile version - size taken from https://www.w3schools.com/css/css_rwd_mediaqueries.asp */
+@media screen and (max-width: 600px) {
+    /* css for navigation */
+
+    /* hamburger menu icon - shown in mobile menu */
+    .mobileMenuIcon {
+        display: inline;
+    }
+
+    /* shopping cart icon  - hide in mobile view */
+    .cartNavIcon {
+        display: none;
+    }
+
+    /* login icon - hide in mobile view */
+    .loginNavIcon {
+        display: none;
+    }
+
+    /* navigation links (container) -shown when menu icon is clicked  */
+    .mobileNavLinksList {
+        display: inline-table;
+        width: 100%;
+        /* margin-top: 20px; */
+        font-size: 0.85em;
+        padding: 10px;
+        background-color: rgb(52, 81, 108);
+    }
+
+    #navSection {
+        display: none;
+    }
+    
+    #mobileNavSection {
+        width: 100%;
+        display: none;
+    }
+
+
+    
+/* css for footer - - displays as a grid */
+    .footH2 {
+        font-size: 1.25em;
+    }
+
+    .footP {
+        font-size: 1.1em;
+    }
+
+    .contactInfo {
+        margin-left: 5%;
+        margin-right: 2%;
+        text-decoration: none;
+        grid-column: 1;
+    }
+
+    .assignmentDetails {
+        margin-left: 2%;
+        margin-right: 2%;
+        grid-column: 2;
+    }
+
+    .FindSU {
+        margin-right: 2%;
+        margin-left: 5%;
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .socialMediaIcons {
+        display: inline;
+        margin: 2%;
+        grid-column: 2;
+        grid-row: 2;
+    }
+}
+
+
+/* css for tablet version - size taken from https://www.w3schools.com/css/css_rwd_mediaqueries.asp*/
+@media screen and (max-width: 992px) and (min-width: 601px) {
+    /* css for navigation */
+
+    /* shows navigation for desktop */
+    #navSection {
+        display: inline-block;
+    }
+
+    /* hides navigation for mobile */
+    #mobileNavSection {
+        display: none !important;
+    }
+
+    .navLinksList {
+        display: inline-flex;
+    }
+
+    /* hamburger menu icon - hidden in tablet and desktop */
+    .mobileMenuIcon {
+        display: none;
+    }
+
+    /* shopping cart icon  - shown in tablet and desktop */
+    .cartNavIcon {
+        display: inline;
+    }
+
+    /* login  - shown in tablet and desktop */
+    .loginNavIcon {
+        display: inline;
+    }
+
+    /* hides navigation for mobile - shown when hamburger icon is clicked*/
+    #mobileNavSection {
+        display: none;
+    }
+
+
+/* css for footer - - displays as a grid */
+    .footH2 {
+        font-size: 1.5em;
+    }
+
+    .footP {
+        font-size: 1.2.em;
+    }
+
+    .contactInfo {
+        margin-left: 5%;
+        margin-right: 2%;
+        text-decoration: none;
+        grid-column: 1;
+    }
+        
+    .FindSU {
+        margin-right: 2%;
+        margin-left: 5%;
+        grid-column: 3;
+    }
+}
+
+/* css for desktop version - size taken from https://www.w3schools.com/css/css_rwd_mediaqueries.asp */
+@media screen and (min-width: 993px) {
+    /* css for navigation */
+
+    /* show navigation for tablet */
+    #navSection {
+        display: inline-block;
+    }
+
+    /* hides navigation for mobile */
+    #mobileNavSection {
+        display: none !important;
+    }
+
+    .navLinksList {
+        display: inline-flex;
+    }
+
+    /* hamburger menu icon - hidden in tablet and desktop */
+    .mobileMenuIcon {
+        display: none;
+    }
+
+    /* shopping cart icon  - shown in tablet and desktop */
+    .cartNavIcon {
+        display: inline;
+    }
+
+    /* login  - shown in tablet and desktop */
+    .loginNavIcon {
+        display: inline;
+    }
+
+/* css for footer - displays as a grid */
+    .footH2 {
+        font-size: 1.7em;
+    }
+
+    .footP {
+        font-size: 1.37em;
+    }
+
+    .contactInfo {
+        margin-left: 5%;
+        margin-right: 2%;
+        text-decoration: none;
+        grid-column: 1;
+    }
+
+    .FindSU {
+        margin-right: 2%;
+        margin-left: 5%;
+        grid-column: 3;
+    }
+
+    .socialMediaIcons {
+        display: inline;
+        grid-column: 4;
+    }
+}

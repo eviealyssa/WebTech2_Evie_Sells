@@ -23,53 +23,8 @@
 
         if (mysqli_connect_errno())
         {
-            echo "ERROR: could not connect to database: <br> " . mysqli_connect_error();
+            echo "<script> alert(ERROR: could not connect to database." . mysqli_connect_error().")</script>";
         }
-        else
-        {
-            echo "Connected to database. <br>";
-        }
-
-        // $query = "SELECT title FROM modules ORDER BY title";
-        
-        // $result = mysqli_query($connection, $query);
-        // $count = mysqli_num_rows($result);
-
-        // echo "Number of modules: $count <br>";
-
-        // echo "<ol>";
-        // while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-        // {
-
-        //     echo "<li>". $row["title"] . "</li>";
-        //     echo '<br>';
-        // }
-
-        // echo "</ol>";
-
-
-
-        // //$query = "SELECT title FROM modules ORDER BY title";
-        // $query2 = "SELECT title FROM modules WHERE title='Computer Systems and Security' OR title='Games Concepts' OR title='Programming' OR title='Introduction to Networking'  ORDER BY title";
-        
-        // $result2 = mysqli_query($connection, $query2);
-        // $count2 = mysqli_num_rows($result2);
-
-        // echo "Number of modules: $count2 <br>";
-
-        // echo "<ol>";
-        // while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC))
-        // {
-
-        //     echo "<li>". $row2["title"] . "</li>";
-        //     echo '<br>';
-        // }
-
-        // echo "</ol>";
-
-
-
-
     ?>
 
 </body>

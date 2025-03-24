@@ -14,7 +14,7 @@
 <body>
     <?php 
         session_start();
-        require_once 'conn.php';
+        //require_once 'conn.php';
 
         $timestamp = date('Y-m-d H:i:s'); // gets the timestamp in the format = (yyyy-mm-dd hh:mm:ss) - https://www.w3schools.com/php/func_date_date_format.asp
         $name = htmlspecialchars($_POST["fullName"]);
@@ -34,11 +34,12 @@
        
         if ($result) 
         {
-           echo "alert("User has been added"";
+           echo "<script>alert(User has been added)</script>";
         }
         else
         {
-            echo "not null";
+            echo "<script>alert(Error has occurred, please try again.)</script>";
+
         }
     ?>
 
