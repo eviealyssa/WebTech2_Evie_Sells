@@ -11,6 +11,28 @@ body {
     min-width: 300px;
 }
 
+/* css for all */
+.breakPoint {
+    margin: 2%;
+}
+
+h1 {
+    text-align: center;
+    color: #34516C;    
+}
+
+.h2Title {
+    text-align: center;
+    color: rgb(52, 81, 108, 0.87);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p {
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+
 /* nav bar */
 nav {
     width: 100%;
@@ -90,16 +112,37 @@ footer {
     width: 100%;
 }
     
-.socialMediaIcons a {
+.socialimagesIcons a {
     text-decoration: none;
 } 
 
 
 
-/* css for mobile version - size taken from https://www.w3schools.com/css/css_rwd_mediaqueries.asp */
-@media screen and (max-width: 600px) {
-    /* css for navigation */
+/* css for mobile version - size taken from https://www.w3schools.com/css/css_rwd_imagesqueries.asp */
+@images screen and (max-width: 600px) {
+    /* core */
+    h1 {
+        font-size: 2.1em;
+    }
 
+    .h2Title {
+        font-size: 1.9em;
+    }
+
+    h2 {
+        font-size: 1.6em;    
+    }
+
+    h3 {
+        font-size: 1.4em;
+    }
+
+    p {
+        font-size: 1.3em;
+    }
+
+    
+    /* css for navigation */
     /* hamburger menu icon - shown in mobile menu */
     .mobileMenuIcon {
         display: inline;
@@ -165,7 +208,7 @@ footer {
         grid-row: 2;
     }
 
-    .socialMediaIcons {
+    .socialimagesIcons {
         display: inline;
         margin: 2%;
         grid-column: 2;
@@ -174,10 +217,30 @@ footer {
 }
 
 
-/* css for tablet version - size taken from https://www.w3schools.com/css/css_rwd_mediaqueries.asp*/
-@media screen and (max-width: 992px) and (min-width: 601px) {
-    /* css for navigation */
+/* css for tablet version - size taken from https://www.w3schools.com/css/css_rwd_imagesqueries.asp*/
+@images screen and (max-width: 992px) and (min-width: 601px) {
+    /* core css */
+    h1 {
+        font-size: 2.6em;
+    }
 
+    .h2Title {
+        font-size: 2.4em;
+    }
+
+    h2 {
+        font-size: 1.9em;    
+    }
+
+    h3 {
+        font-size: 1.7em;
+    }
+
+    p {
+        font-size: 1.5em;
+    }
+    
+    /* css for navigation */
     /* shows navigation for desktop */
     #navSection {
         display: inline-block;
@@ -236,10 +299,31 @@ footer {
     }
 }
 
-/* css for desktop version - size taken from https://www.w3schools.com/css/css_rwd_mediaqueries.asp */
-@media screen and (min-width: 993px) {
-    /* css for navigation */
+/* css for desktop version - size taken from https://www.w3schools.com/css/css_rwd_imagesqueries.asp */
+@images screen and (min-width: 993px) {
+    /* css for all */
+    h1 {
+        font-size: 3.5em;
+    }
 
+    .h2Title {
+        font-size: 3em;
+    }
+
+    h2 {
+        font-size: 2.2em;    
+    }
+
+    h3 {
+        font-size: 1.9em;
+    }
+
+    p {
+        font-size: 1.55em;
+    }
+
+
+    /* css for navigation */
     /* show navigation for tablet */
     #navSection {
         display: inline-block;
@@ -291,7 +375,7 @@ footer {
         grid-column: 3;
     }
 
-    .socialMediaIcons {
+    .socialimagesIcons {
         display: inline;
         grid-column: 4;
     }

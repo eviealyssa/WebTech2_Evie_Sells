@@ -1,0 +1,139 @@
+
+/* css for product page */
+
+#scrollToTopBtn {
+    float: right;
+    position: fixed;
+    border: solid #577A9B;
+    border-radius: 25px;
+    background-color: #577A9B; /* slate */
+    color: white;
+    font-size: 100%;
+    padding: 10px;
+    margin: 10px;
+}
+
+#scrollToTopBtn:hover {
+    opacity: 0.7;
+}
+
+.productCard {
+    border: solid #34516C;
+    border-radius: 25px;
+    max-width: 250px;
+    margin: 0.7em;
+    padding: 0.5em;
+    text-align: center;
+    font-family: arial;
+  }
+  
+.productPrice {
+    color:#34516C;
+    font-size: 1.2em;
+}
+
+.productDescription{
+    font-size: 1em;
+}
+
+.productName {
+    font-size: 1.3em;
+}
+
+.addToBagBtn {
+    border: solid #34516C;
+    border-radius: 16px;
+    outline: 0;
+    padding: 8px;
+    color: white;
+    background-color: #34516C;
+    text-align: center;
+    width: 100%;
+    font-size: 1em;
+}
+
+.addToBagBtn:hover {
+    opacity: 0.7;
+}
+
+#backToPageBtn:hover {
+    opacity: 0.7;
+}
+
+
+.productCard button:hover {
+    opacity: 0.7;
+}
+
+.productCard .productImage {
+    width: 50%;
+}
+
+.productCard .productImage:hover {
+    opacity: 0.5;
+}
+
+.readMoreLink {
+    font-size: 0.9em;
+    padding: 2px;
+}
+
+.readMoreLink:hover {
+    text-decoration: underline;
+}
+
+.productContainerTitle {
+    width: 100%;
+}
+
+#tshirtContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#hoodyContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#jumperContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+/* css for mobile version */
+@images screen and (max-width: 768px) {
+
+    /* css for item page */
+    #descProduct {
+        font-size: 1em;
+    }
+    
+    #nameProduct {
+        font-size: 1.5em;
+    }
+
+    #priceProduct {
+        font-size: 1.3em;
+    } 
+
+    #colourText {
+        font-size: 1.3em;
+    }
+
+    #colourProduct {
+        font-size: 1.3em;
+    }
+
+    /* css for cart page */
+    .itemCartImage {
+        width: 160px;
+    }
+}
+
+
+

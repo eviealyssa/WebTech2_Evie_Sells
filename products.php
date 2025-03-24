@@ -11,7 +11,7 @@ Email: EASells@uclan.ac.uk
 <head>
     <!-- link to stylesheets -->
      <link rel="stylesheet" href="styling\headFootStyle.css" type= "text/css">
-     <link rel="stylesheet" href="styling\indexStyle.css" type= "text/css">
+     <link rel="stylesheet" href="styling\productsStyle.css" type= "text/css">
 
 </head>
 
@@ -32,7 +32,7 @@ Email: EASells@uclan.ac.uk
         <nav>
              <!-- adding in logo - alternative text = - ACCESSIBILITY -->
             <div class="logo">
-                <img src="media\logo.svg" alt="UCLan logo" height="65" >
+                <img src="images\logo.svg" alt="UCLan logo" height="65" >
             </div>
             
             <!-- navigation links -->
@@ -45,13 +45,13 @@ Email: EASells@uclan.ac.uk
             </div>
 
             <!-- login menu icon for desktop / tablet -->
-            <a href="login.php" class="splitNav loginNavIcon"><img src="media\other\login sybol nav.png" alt="Login" height="50"></a>
+            <a href="login.php" class="splitNav loginNavIcon"><img src="images\other\login sybol nav.png" alt="Login" height="50"></a>
 
             <!-- cart menu icon for desktop / tablet -->
-            <a href="cart.html" class="splitNav cartNavIcon"><img src="media\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
+            <a href="cart.html" class="splitNav cartNavIcon"><img src="images\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
 
             <!-- adding in hamburg menu icon for mobile users -->
-            <a class="mobileMenuIcon splitNav" onclick="toggleHamburgerNav()"><img src="media\other\hamburger-menu-icon.svg" alt="Menu" height="50"></a>
+            <a class="mobileMenuIcon splitNav" onclick="toggleHamburgerNav()"><img src="images\other\hamburger-menu-icon.svg" alt="Menu" height="50"></a>
 
             <!-- mobile navigation links -->
             <div id="mobileNavSection">
@@ -62,24 +62,58 @@ Email: EASells@uclan.ac.uk
                     <li><a href="login.php" target="_self" class="navLinks">Login</a></li> 
                 </ul>
             </div> 
-
         </nav>
         <!-- header - title -->
         <div class="breakPoint"></div>
-        <h1>Welcome to UCLan's Student Union Shop</h1>
+        <h1>Products</h1>
         <div class="breakPoint"></div>
-
-        <?php
-        if (isset($_SESSION["name"])) 
-        {
-            echo "<h1> Welcome Back " . $_SESSION["name"] . "<h1>";
-        }
-        ?>
     </header>
 
     <main> <!-- Clearly defines which is the main part of the web page  -->
         <div class="breakPoint"></div> <!-- adds a space to the page to break things up   -->
         <div class="breakPoint"></div>
+
+        <!-- Product Filters !!! -->
+
+
+
+
+
+
+        <div class="breakPoint"></div>
+
+        <!-- scroll to top button -->
+        <button id="scrollToTopBtn" onclick="scrollToTop()">To Top</button>
+
+
+        <!-- product card template & tshirt container -->
+        
+        <?php
+            // tshirt section
+            echo "<section id='tshirtContainer'>"; // open parent tag
+            echo "<h2 class='h2Title productContainerTitle'>Tshirts</h2>"; // tshirt title
+            addProductsToPage("UCLan Logo Tshirt", $connection);
+            echo "</section>"; // close parent tag
+            echo "<div class='breakPoint'></div>";
+
+            // hoody section
+            echo "<section id='hoodyContainer'>"; // open parent tag
+            echo "<h2 class='h2Title productContainerTitle'>Hoodies</h2>"; // tshirt title
+            addProductsToPage("UCLan Hoodie", $connection);
+            echo "</section>"; // close parent tag
+            echo "<div class='breakPoint'></div>";
+
+            // jumper section
+            echo "<section id='jumperContainer'>"; // open parent tag
+            echo "<h2 class='h2Title productContainerTitle'>Jumpers</h2>"; // tshirt title
+            addProductsToPage("UCLan Logo Jumper", $connection);
+            echo "</section>"; // close parent tag
+            echo "<div class='breakPoint'></div>";
+
+        ?>
+
+
+
 
 
     </main>
@@ -113,24 +147,24 @@ Email: EASells@uclan.ac.uk
             </p>
         </div>
 
-        <div class="socialMediaIcons">
+        <div class="socialimagesIcons">
             <h2 class="footH2">Stay in touch with the SU!</h2>
 
             <div class="iconsFooter">
                 <a href="https://www.facebook.com/uclanstudentsunion/">
-                    <img src='media\social_media_icons\facebook-social-media-icon.svg' alt="Facebook icon" height="40">
+                    <img src="images\social_media_icons\facebook-social-media-icon.svg" alt="Facebook icon" height="40">
                 </a>
     
                 <a href="https://www.tiktok.com/@uclansu">
-                    <img src='media\social_media_icons\tiktok-social-media-icon.svg' alt="TikTok icon" height="40">
+                    <img src="images\social_media_icons\tiktok-social-media-icon.svg" alt="TikTok icon" height="40">
                 </a>
     
                 <a href="https://www.instagram.com/uclansu/">
-                    <img src='media\social_media_icons\instagram-social-media-icon.svg' alt="Instagram icon" height="40">
+                    <img src="images\social_media_icons\instagram-social-media-icon.svg" alt="Instagram icon" height="40">
                 </a>
     
                 <a href="https://x.com/i/flow/login?redirect_after_login=%2FUCLanSU">
-                    <img src='media\social_media_icons\x-social-media-black-icon.svg' alt="X icon" height="40">
+                    <img src="images\social_media_icons\x-social-media-black-icon.svg" alt="X icon" height="40">
                 </a>
             </div>
         </div>
@@ -139,6 +173,9 @@ Email: EASells@uclan.ac.uk
 
 <!-- script - JS -->
     <script>
+
+        // hide display product card
+
         // Open / Close hamburger navigation function
         function toggleHamburgerNav()
         {
@@ -154,6 +191,62 @@ Email: EASells@uclan.ac.uk
             }
         }
 
+        // sets scroll height to 0,0
+        function scrollToTop()
+        {
+            sessionStorage.setItem("scrollHeightPP", 0);
+            window.scrollTo(0,0);
+        }
+
+        // gets and returns the id of the selected item
+        function getItemId(button)
+        {
+            var productId = button.parentElement.id;
+            return productId;
+        }
+
+        function addToCart(button)
+        {
+            //console.log("id = ", getItemId(selectedItem));
+            var divId = button.parentElement.id; // parentElement is the div containing the button
+            alert("The ID of the div is: " + divId);
+        }
+
+
+        <?php
+        // adds the products to the page by querying the database base based on product type.
+        // an id is assigned to each div, equivalent to the item id from the database.
+            function addProductsToPage($type, $connection)
+            {
+                $sql = "SELECT * FROM tbl_products WHERE product_type = ?"; 
+                $stmt = $connection->prepare($sql); // prepare query
+                // $type = "UCLan Logo Tshirt";
+                $stmt->bind_param("s", $type); // bind param
+                $stmt->execute(); // execute query
+                $result = $stmt->get_result(); // get the result
+
+                if ($result->num_rows > 0) {
+                    // Loop through the result and echo the product_name
+                    while ($row = $result->fetch_assoc()) {
+                        echo '
+                            <div class="productCard" id="'. $row["product_id"] . '">
+                                <img src="' . $row["product_image"] . '" alt="' . $row["product_title"] . '" style="width: 100%"> 
+                                <h2 class="productName">' . $row["product_title"] . '</h2>
+                                <h3 class="productPrice">£' . $row["product_price"] . '</h3>
+                                <p class="productDescription">'. $row["product_desc"] . '</p>
+                                <a class="readMoreLink">Read more...</a>
+                                <button class="addToBagBtn" onclick="addToCart(this)">Add to Cart</button>
+                            </div>
+                        ';
+                    }
+                } else {
+                    echo "No products found.";
+                }
+
+                $stmt->close(); // close the statement
+
+            }
+        ?>        
     </script>
 
 </body>

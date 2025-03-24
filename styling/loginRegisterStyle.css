@@ -108,7 +108,7 @@ span.register {
 
 
 /* css for mobile version */
-@media screen and (max-width: 768px) {
+@images screen and (max-width: 768px) {
   /* css for all */
   h1 {
       font-size: 2.1em;
@@ -132,7 +132,7 @@ span.register {
 }
 
  /* css for tablet version */
-@media screen and (max-width: 1024px) and (min-width: 769px) {
+@images screen and (max-width: 1024px) and (min-width: 769px) {
   /* css for all */
   h1 {
       font-size: 2.6em;
@@ -157,7 +157,7 @@ span.register {
 }
 
 /* css for desktop version */
-@media screen and (min-width: 1025px) {    
+@images screen and (min-width: 1025px) {    
   /* css for all */
   h1 {
       font-size: 3.5em;

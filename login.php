@@ -20,7 +20,7 @@ Email: EASells@uclan.ac.uk
              <nav>
              <!-- adding in logo - alternative text = - ACCESSIBILITY -->
             <div class="logo">
-                <img src="media\logo.svg" alt="UCLan logo" height="65" >
+                <img src="images\logo.svg" alt="UCLan logo" height="65" >
             </div>
             
             <!-- navigation links -->
@@ -33,13 +33,13 @@ Email: EASells@uclan.ac.uk
             </div>
 
             <!-- login menu icon for desktop / tablet -->
-            <a href="login.php" class="splitNav loginNavIcon"><img src="media\other\login sybol nav.png" alt="Login" height="50"></a>
+            <a href="login.php" class="splitNav loginNavIcon"><img src="images\other\login sybol nav.png" alt="Login" height="50"></a>
 
             <!-- cart menu icon for desktop / tablet -->
-            <a href="cart.html" class="splitNav cartNavIcon"><img src="media\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
+            <a href="cart.html" class="splitNav cartNavIcon"><img src="images\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
 
             <!-- adding in hamburg menu icon for mobile users -->
-            <a class="mobileMenuIcon splitNav" onclick="toggleHamburgerNav()"><img src="media\other\hamburger-menu-icon.svg" alt="Menu" height="50"></a>
+            <a class="mobileMenuIcon splitNav" onclick="toggleHamburgerNav()"><img src="images\other\hamburger-menu-icon.svg" alt="Menu" height="50"></a>
 
             <!-- mobile navigation links -->
             <div id="mobileNavSection">
@@ -61,7 +61,7 @@ Email: EASells@uclan.ac.uk
     <form id="login" action="loginActionPage.php" method="post">
 
         <div id="loginImage">
-        <img id="loginAvatarImg" src="media\other\loginImageAvatar.webp" alt="login avatar" height="80" >
+        <img id="loginAvatarImg" src="images\other\loginImageAvatar.webp" alt="login avatar" height="80" >
         </div>
 
 
@@ -117,24 +117,24 @@ Email: EASells@uclan.ac.uk
             </p>
         </div>
 
-        <div class="socialMediaIcons">
+        <div class="socialimagesIcons">
             <h2 class="footH2">Stay in touch with the SU!</h2>
 
             <div class="iconsFooter">
                 <a href="https://www.facebook.com/uclanstudentsunion/">
-                    <img src='media\social_media_icons\facebook-social-media-icon.svg' alt="Facebook icon" height="40">
+                    <img src="images\social_media_icons\facebook-social-media-icon.svg" alt="Facebook icon" height="40">
                 </a>
     
                 <a href="https://www.tiktok.com/@uclansu">
-                    <img src='media\social_media_icons\tiktok-social-media-icon.svg' alt="TikTok icon" height="40">
+                    <img src="images\social_media_icons\tiktok-social-media-icon.svg" alt="TikTok icon" height="40">
                 </a>
     
                 <a href="https://www.instagram.com/uclansu/">
-                    <img src='media\social_media_icons\instagram-social-media-icon.svg' alt="Instagram icon" height="40">
+                    <img src="images\social_media_icons\instagram-social-media-icon.svg" alt="Instagram icon" height="40">
                 </a>
     
                 <a href="https://x.com/i/flow/login?redirect_after_login=%2FUCLanSU">
-                    <img src='media\social_media_icons\x-social-media-black-icon.svg' alt="X icon" height="40">
+                    <img src="images\social_media_icons\x-social-media-black-icon.svg" alt="X icon" height="40">
                 </a>
             </div>
         </div>
