@@ -4,6 +4,28 @@ Reg No. 21255921
 Email: EASells@uclan.ac.uk 
 -->
 
+<?php
+    session_start();
+    require_once 'conn.php';
+
+    // get selected filter
+    $productType = isset($_GET['productType']) ? $_GET['productType'] : "";
+
+    // Prepare Query
+    $sql = "SELECT * FROM tbl_products";
+    if (!empty($productType)) {
+        $sql .= " WHERE product_type = ?";
+        $stmt = $connection->prepare($sql); // prepare query
+        $stmt->bind_param("s", $productType); // bind param
+    } else {
+        $stmt = $connection->prepare($sql);
+    }
+    $stmt->execute(); // execute query
+    $result = $stmt->get_result(); // get the result
+
+            
+ ?>
+
 <!-- ACCESSIBILITY - declare the language -->
 <!DOCTYPE html>
 <html lang="en">
@@ -16,13 +38,8 @@ Email: EASells@uclan.ac.uk
 </head>
 
 <body> 
-
-    <?php// opens php session
-        session_start();
-        require_once 'conn.php';
-    ?>
     <!-- showProducts -->
-<header> 
+    <header> 
          <!-- navigation bar -->
         <nav>
              <!-- adding in logo - alternative text = - ACCESSIBILITY -->
@@ -69,44 +86,73 @@ Email: EASells@uclan.ac.uk
         <div class="breakPoint"></div>
 
         <!-- Product Filters !!! -->
-        <div id="productFiltersBox">
+        <!-- <div id="productFiltersBox">
             <p> Filter By:</p>
             <ul id="productFiltersList">
-                <li class="filterList" id="filterAll" onclick="setFilterAll()">All</li>
-                <li class="filterList" id="filterTShirts" onclick="setFilterTShirts()">TShirts</li>
-                <li class="filterList" id="filterHoodies" onclick="setFilterHoodies()">Hoodies</li>
-                <li class="filterList" id="filterJumpers" onclick="setFilterJumpers()">Jumpers</li>
+                <li class="filterList" id="filterAll">All</li>
+                <li class="filterList" id="filterTShirts">TShirts</li>
+                <li class="filterList" id="filterHoodies">Hoodies</li>
+                <li class="filterList" id="filterJumpers">Jumpers</li>
             </ul>
+        </div> -->
+        <!-- use a form to get filter data -->
+        <div id="productFiltersBox">
+            <form method="GET" action="">
+                <label for="productFiltersList">Filter by Product Type:</label>
+                <select name="productType" id="productFiltersList">
+                    <option class="filterList" value="">All</option>
+                    <option class="filterList" value="UCLan Logo Tshirt">TShirts</option>
+                    <option class="filterList" value="UCLan Hoodie">Hoodies</option>
+                    <option class="filterList" value="UCLan Logo Jumper">Jumpers</option>
+                </select>
+                <button type="submit">Filter</button>
+            </form>
         </div>
 
         <div class="breakPoint"></div>
 
         <!-- scroll to top button -->
         <button id="scrollToTopBtn" onclick="scrollToTop()">To Top</button>
+
+        <div id="productContainer">
+            <?php while ($row = $result->fetch_assoc()) 
+            {
+                echo '
+                    <div class="productCard" id="'. $row["product_id"] . '">
+                        <img src="' . $row["product_image"] . '" alt="' . $row["product_title"] . '" style="width: 100%"> 
+                        <h2 class="productName">' . $row["product_title"] . '</h2>
+                        <h3 class="productPrice">£' . $row["product_price"] . '</h3>
+                        <p class="productDescription">'. $row["product_desc"] . '</p>
+                        <a class="readMoreLink">Read more...</a>
+                        <button class="addToBagBtn" onclick="addToCart(this)">Add to Cart</button>
+                    </div>
+                ';
+            }?>
+        </div>
         
-        <?php
-            //tshirt section
-            echo "<section id='tshirtContainer'>"; // open parent tag
-            echo "<h2 class='h2Title productContainerTitle'>Tshirts</h2>"; // tshirt title
-            addProductsToPage("UCLan Logo Tshirt", $connection);
-            echo "</section>"; // close parent tag
-            echo "<div class='breakPoint'></div>";
+        <!--
+            // tshirt section
+            // echo "<section id='tshirtContainer'>"; // open parent tag
+            // echo "<h2 class='h2Title productContainerTitle'>Tshirts</h2>"; // tshirt title
+            // addProductsToPage("UCLan Logo Tshirt", $connection);
+            // echo "</section>"; // close parent tag
+            // echo "<div class='breakPoint'></div>";
 
-            // hoody section
-            echo "<section id='hoodyContainer'>"; // open parent tag
-            echo "<h2 class='h2Title productContainerTitle'>Hoodies</h2>"; // tshirt title
-            addProductsToPage("UCLan Hoodie", $connection);
-            echo "</section>"; // close parent tag
-            echo "<div class='breakPoint'></div>";
+            // // hoody section
+            // echo "<section id='hoodyContainer'>"; // open parent tag
+            // echo "<h2 class='h2Title productContainerTitle'>Hoodies</h2>"; // tshirt title
+            // addProductsToPage("UCLan Hoodie", $connection);
+            // echo "</section>"; // close parent tag
+            // echo "<div class='breakPoint'></div>";
 
-            // jumper section
-            echo "<section id='jumperContainer'>"; // open parent tag
-            echo "<h2 class='h2Title productContainerTitle'>Jumpers</h2>"; // tshirt title
-            addProductsToPage("UCLan Logo Jumper", $connection);
-            echo "</section>"; // close parent tag
-            echo "<div class='breakPoint'></div>";
+            // // jumper section
+            // echo "<section id='jumperContainer'>"; // open parent tag
+            // echo "<h2 class='h2Title productContainerTitle'>Jumpers</h2>"; // tshirt title
+            // addProductsToPage("UCLan Logo Jumper", $connection);
+            // echo "</section>"; // close parent tag
+            // echo "<div class='breakPoint'></div>";
 
-        ?> 
+         -->
 
 
 
@@ -169,7 +215,9 @@ Email: EASells@uclan.ac.uk
 
 <!-- script - JS -->
     <script>
-               // Open / Close hamburger navigation function
+        
+
+        // Open / Close hamburger navigation function
         function toggleHamburgerNav()
         {
             // get navSection and set as linksNav

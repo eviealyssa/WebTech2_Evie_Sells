@@ -1,6 +1,32 @@
 
 /* css for product page */
 
+/* filter list */
+#productFiltersBox {
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-flex;
+    justify-content: center;
+    padding: 3px;
+    width: 100%;
+}
+#productFiltersList{
+    display: inline;
+    font-size: 1.45em;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+.filterList {
+    display: inline;
+    padding-right: 2.5px;
+    padding-left: 2.5px;
+    padding-bottom: 5px;
+}
+.filterList:hover{
+    text-decoration: underline;
+}
+
+
+
 #scrollToTopBtn {
     float: right;
     position: fixed;
@@ -85,28 +111,16 @@
 .productContainerTitle {
     width: 100%;
 }
-
-#tshirtContainer {
+#productContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-}
-
-#hoodyContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-#jumperContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    background-color: aqua;
 }
 
 
 /* css for mobile version */
-@images screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
 
     /* css for item page */
     #descProduct {

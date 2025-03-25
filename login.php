@@ -32,11 +32,11 @@ Email: EASells@uclan.ac.uk
                 </ul>
             </div>
 
-            <!-- login menu icon for desktop / tablet -->
-            <a href="login.php" class="splitNav loginNavIcon"><img src="images\other\login sybol nav.png" alt="Login" height="50"></a>
-
             <!-- cart menu icon for desktop / tablet -->
             <a href="cart.html" class="splitNav cartNavIcon"><img src="images\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
+
+            <!-- login menu icon for desktop / tablet -->
+            <a href="login.php" class="splitNav loginNavIcon"><img src="images\other\login sybol nav.png" alt="Login" height="50"></a>
 
             <!-- adding in hamburg menu icon for mobile users -->
             <a class="mobileMenuIcon splitNav" onclick="toggleHamburgerNav()"><img src="images\other\hamburger-menu-icon.svg" alt="Menu" height="50"></a>
@@ -44,8 +44,8 @@ Email: EASells@uclan.ac.uk
             <!-- mobile navigation links -->
             <div id="mobileNavSection">
                 <ul class="mobileNavLinksList">
-                    <li><a href="index.html" target="_self" class="navLinks">Home</a></li>
-                    <li><a href="products.html" target="_self" class="navLinks">Products</a></li>
+                    <li><a href="index.php" target="_self" class="navLinks">Home</a></li>
+                    <li><a href="products.php" target="_self" class="navLinks">Products</a></li>
                     <li><a href="cart.html" target="_self" class="navLinks">Cart</a></li> 
                     <li><a href="login.php" target="_self" class="navLinks activePage">Login</a></li> 
                 </ul>
@@ -61,7 +61,7 @@ Email: EASells@uclan.ac.uk
     <form id="login" action="loginActionPage.php" method="post">
 
         <div id="loginImage">
-        <img id="loginAvatarImg" src="images\other\loginImageAvatar.webp" alt="login avatar" height="80" >
+            <img id="loginAvatarImg" src="images\other\loginImageAvatar.webp" alt="login avatar" height="80" >
         </div>
 
 

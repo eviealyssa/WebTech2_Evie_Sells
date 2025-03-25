@@ -90,7 +90,7 @@
 
 
 /* css for mobile mode */
-@images screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
     /* css for all */
     h1 {
         font-size: 2.1em;
@@ -129,7 +129,7 @@
 
 
 /* css for tablet */
-@images screen and (max-width: 1024px) and (min-width: 769px) {
+@media screen and (max-width: 1024px) and (min-width: 769px) {
     /* css for all */
     h1 {
         font-size: 2.6em;
@@ -153,7 +153,7 @@
 }
 
 /* css for desktop */
-@images screen and (min-width: 1025px) {    
+@media screen and (min-width: 1025px) {    
     /* css for all */
     h1 {
         font-size: 3.5em;

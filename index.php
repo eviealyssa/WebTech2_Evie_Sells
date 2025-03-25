@@ -44,11 +44,11 @@ Email: EASells@uclan.ac.uk
                 </ul>
             </div>
 
-            <!-- login menu icon for desktop / tablet -->
-            <a href="login.php" class="splitNav loginNavIcon"><img src="images\other\login sybol nav.png" alt="Login" height="50"></a>
-
             <!-- cart menu icon for desktop / tablet -->
             <a href="cart.html" class="splitNav cartNavIcon"><img src="images\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
+
+            <!-- login menu icon for desktop / tablet -->
+            <a href="login.php" class="splitNav loginNavIcon"><img src="images\other\login sybol nav.png" alt="Login" height="50"></a>
 
             <!-- adding in hamburg menu icon for mobile users -->
             <a class="mobileMenuIcon splitNav" onclick="toggleHamburgerNav()"><img src="images\other\hamburger-menu-icon.svg" alt="Menu" height="50"></a>
