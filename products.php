@@ -4,6 +4,27 @@ Reg No. 21255921
 Email: EASells@uclan.ac.uk 
 -->
 
+<?php
+    session_start();
+    require_once 'conn.php';
+
+    // get selected filter
+    $productType = isset($_GET["productType"]) ? $_GET["productType"] : "";
+
+    // Prepare Query
+    $sql = "SELECT * FROM tbl_products";
+    if (!empty($productType)) 
+    {
+        $sql .= " WHERE product_type = ?"; // add where clause, if productType is not empty
+        $stmt = $connection->prepare($sql); // prepare query
+        $stmt->bind_param("s", $productType); // bind param
+    } else {
+        $stmt = $connection->prepare($sql);
+    }
+    $stmt->execute(); // execute query
+    $result = $stmt->get_result(); // get the result
+?>
+
 <!-- ACCESSIBILITY - declare the language -->
 <!DOCTYPE html>
 <html lang="en">
@@ -16,13 +37,8 @@ Email: EASells@uclan.ac.uk
 </head>
 
 <body> 
-
-    <?php// opens php session
-        session_start();
-        require_once 'conn.php';
-    ?>
     <!-- showProducts -->
-<header> 
+    <header> 
          <!-- navigation bar -->
         <nav>
              <!-- adding in logo - alternative text = - ACCESSIBILITY -->
@@ -68,50 +84,42 @@ Email: EASells@uclan.ac.uk
         <div class="breakPoint"></div> <!-- adds a space to the page to break things up   -->
         <div class="breakPoint"></div>
 
-        <!-- Product Filters !!! -->
+        <!-- Product Filters -->
+        <!-- use a form to get filter data -->
         <div id="productFiltersBox">
-            <p> Filter By:</p>
-            <ul id="productFiltersList">
-                <li class="filterList" id="filterAll" onclick="setFilterAll()">All</li>
-                <li class="filterList" id="filterTShirts" onclick="setFilterTShirts()">TShirts</li>
-                <li class="filterList" id="filterHoodies" onclick="setFilterHoodies()">Hoodies</li>
-                <li class="filterList" id="filterJumpers" onclick="setFilterJumpers()">Jumpers</li>
+            <h3>Filter by Type: </h3>
+            <ul class="productFiltersList">
+                <!-- ? is a ternary operator, essentially a short-hand if statement -->
+                <li onclick="filterProducts('')" class="filterList <?= empty($productType) ? 'activeFilter' : '' ?>">All</li> 
+                <li onclick="filterProducts('UCLan Logo Tshirt')" class="filterList <?= $productType == 'UCLan Logo Tshirt' ? 'activeFilter' : '' ?>">Tshirt</li>
+                <li onclick="filterProducts('UCLan Hoodie')" class=" filterList <?= $productType == 'UCLan Hoodie' ? 'activeFilter' : '' ?>">Hoodys</li>
+                <li onclick="filterProducts('UCLan Logo Jumper')" class=" filterList <?= $productType == 'UCLan Logo Jumper' ? 'activeFilter' : '' ?>">Jumpers</li>
             </ul>
         </div>
+
 
         <div class="breakPoint"></div>
 
         <!-- scroll to top button -->
         <button id="scrollToTopBtn" onclick="scrollToTop()">To Top</button>
-        
-        <?php
-            //tshirt section
-            echo "<section id='tshirtContainer'>"; // open parent tag
-            echo "<h2 class='h2Title productContainerTitle'>Tshirts</h2>"; // tshirt title
-            addProductsToPage("UCLan Logo Tshirt", $connection);
-            echo "</section>"; // close parent tag
-            echo "<div class='breakPoint'></div>";
 
-            // hoody section
-            echo "<section id='hoodyContainer'>"; // open parent tag
-            echo "<h2 class='h2Title productContainerTitle'>Hoodies</h2>"; // tshirt title
-            addProductsToPage("UCLan Hoodie", $connection);
-            echo "</section>"; // close parent tag
-            echo "<div class='breakPoint'></div>";
-
-            // jumper section
-            echo "<section id='jumperContainer'>"; // open parent tag
-            echo "<h2 class='h2Title productContainerTitle'>Jumpers</h2>"; // tshirt title
-            addProductsToPage("UCLan Logo Jumper", $connection);
-            echo "</section>"; // close parent tag
-            echo "<div class='breakPoint'></div>";
-
-        ?> 
-
-
-
-
-
+        <div id="productContainer">
+            <?php while ($row = $result->fetch_assoc()) 
+            {
+                // adds the products to the page by querying the database base based on product type.
+                // an id is assigned to each div, equivalent to the item id from the database.
+                echo '
+                    <div class="productCard" id="'. $row["product_id"] . '">
+                        <img src="' . $row["product_image"] . '" alt="' . $row["product_title"] . '" style="width: 100%"> 
+                        <h2 class="productName">' . $row["product_title"] . '</h2>
+                        <h3 class="productPrice">£' . $row["product_price"] . '</h3>
+                        <p class="productDescription">'. $row["product_desc"] . '</p>
+                        <a class="readMoreLink" onclick="toItemPage(' . $row["product_id"] . ')">' . "Read more..." . '</a>
+                        <button class="addToBagBtn" onclick="addToCart(this)">Add to Cart</button>
+                    </div>
+                ';
+            }?>
+        </div>
     </main>
 
     <!-- Footer - splits into a reactive grid -->
@@ -169,7 +177,14 @@ Email: EASells@uclan.ac.uk
 
 <!-- script - JS -->
     <script>
-               // Open / Close hamburger navigation function
+        
+        // filters products
+        function filterProducts(type) {
+            console.log("filter products called, type = ", type);
+            window.location.href = "?productType=" + encodeURIComponent(type);
+        }
+
+        // Open / Close hamburger navigation function
         function toggleHamburgerNav()
         {
             // get navSection and set as linksNav
@@ -198,39 +213,15 @@ Email: EASells@uclan.ac.uk
             console.log("id = ", divId);
         }
 
+        function toItemPage(itemId)
+        {
+            console.log("id = ", itemId);
+            window.location.href = "item.php?itemId=" + itemId;
+        }
+
         <?php
-        // adds the products to the page by querying the database base based on product type.
-        // an id is assigned to each div, equivalent to the item id from the database.
-            function addProductsToPage($type, $connection)
-            {
-                $sql = "SELECT * FROM tbl_products WHERE product_type = ?"; 
-                $stmt = $connection->prepare($sql); // prepare query
-                $stmt->bind_param("s", $type); // bind param
-                $stmt->execute(); // execute query
-                $result = $stmt->get_result(); // get the result
 
-                if ($result->num_rows > 0) {
-                    // Loop through the result and echo results in the form of a product card
-                    while ($row = $result->fetch_assoc()) {
-                        echo '
-                            <div class="productCard" id="'. $row["product_id"] . '">
-                                <img src="' . $row["product_image"] . '" alt="' . $row["product_title"] . '" style="width: 100%"> 
-                                <h2 class="productName">' . $row["product_title"] . '</h2>
-                                <h3 class="productPrice">£' . $row["product_price"] . '</h3>
-                                <p class="productDescription">'. $row["product_desc"] . '</p>
-                                <a class="readMoreLink">Read more...</a>
-                                <button class="addToBagBtn" onclick="addToCart(this)">Add to Cart</button>
-                            </div>
-                        ';
-                    }
-                } else {
-                    echo "No products found.";
-                }
-
-                $stmt->close(); // close the statement
-
-            }
-        ?>        
+        ?>
     </script>
 
 </body>

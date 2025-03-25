@@ -17,14 +17,19 @@
 }
 .filterList {
     display: inline;
-    padding-right: 2.5px;
-    padding-left: 2.5px;
-    padding-bottom: 5px;
+    padding-right: 3px;
+    padding-left: 3px;
+    font-size: 1.45em;
+    font-family: 'Trebuchet MS', sans-serif;
 }
-.filterList:hover{
+.filterList:hover {
     text-decoration: underline;
 }
 
+.filterList li.activeFilter {
+    text-decoration: underline;
+    color: blue;
+}
 
 
 #scrollToTopBtn {
@@ -101,7 +106,7 @@
 
 .readMoreLink {
     font-size: 0.9em;
-    padding: 2px;
+    padding: 8px;
 }
 
 .readMoreLink:hover {
@@ -111,11 +116,11 @@
 .productContainerTitle {
     width: 100%;
 }
+
 #productContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: aqua;
 }
 
 
