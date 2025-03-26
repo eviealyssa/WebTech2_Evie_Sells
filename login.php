@@ -27,8 +27,8 @@ Email: EASells@uclan.ac.uk
             <!-- tablet and laptop navigation links - clear links = ACCESSIBILITY-->
             <div id="navSection">
                 <ul class="navLinksList">
-                    <li><a href="index.html" target="_self" class="navLinks">Home</a></li>
-                    <li><a href="products.html" target="_self" class="navLinks">Products</a></li>
+                    <li><a href="index.php" target="_self" class="navLinks">Home</a></li>
+                    <li><a href="products.php" target="_self" class="navLinks">Products</a></li>
                 </ul>
             </div>
 

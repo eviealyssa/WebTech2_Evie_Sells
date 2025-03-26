@@ -109,8 +109,8 @@ Email: EASells@uclan.ac.uk
                 // adds the products to the page by querying the database base based on product type.
                 // an id is assigned to each div, equivalent to the item id from the database.
                 echo '
-                    <div class="productCard" id="'. $row["product_id"] . '">
-                        <img src="' . $row["product_image"] . '" alt="' . $row["product_title"] . '" style="width: 100%"> 
+                    <div class="productCard"'. $row["product_id"] . '">
+                        <img class ="productImage" src="' . $row["product_image"] . '" alt="' . $row["product_title"] . '" style="width: 100%"> 
                         <h2 class="productName">' . $row["product_title"] . '</h2>
                         <h3 class="productPrice">£' . $row["product_price"] . '</h3>
                         <p class="productDescription">'. $row["product_desc"] . '</p>
@@ -225,6 +225,4 @@ Email: EASells@uclan.ac.uk
     </script>
 
 </body>
-
-
 </html>

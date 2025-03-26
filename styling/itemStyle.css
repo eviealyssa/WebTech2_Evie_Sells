@@ -1,0 +1,70 @@
+
+#itemContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 8%;
+    padding-right: 8%;
+
+}
+
+#itemImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#itemCard {
+    margin: 0.7em;
+    padding: 0.5em;
+    text-align: center;
+    font-family: arial;
+}
+  
+#productPrice {
+    color:#34516C;
+    font-size: 1.2em;
+}
+
+#productDescription{
+    font-size: 1em;
+}
+
+#productName {
+    font-size: 1.3em;
+}
+
+.addToBagBtn {
+    border: solid #34516C;
+    border-radius: 16px;
+    outline: 0;
+    padding: 8px;
+    color: white;
+    background-color: #34516C;
+    text-align: center;
+    width: 50%;
+    font-size: 1em;
+    margin: auto;
+    margin-top: 2%;
+}
+
+.addToBagBtn:hover {
+    opacity: 0.7;
+}
+
+#backToPageBtn:hover {
+    opacity: 0.7;
+}
+
+
+.itemCard button:hover {
+    opacity: 0.7;
+}
+
+.itemCard .productImage {
+    width: 50%;
+}
+
+.itemCard .productImage:hover {
+    opacity: 0.5;
+}
