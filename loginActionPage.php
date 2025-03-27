@@ -37,6 +37,7 @@
             {
                 $_SESSION["logged"] = true;
                 $_SESSION["name"] = $record["user_full_name"];
+                $_SESSION["userID"] = $record["user_id"];
                 $_SESSION["errorLogin"] = null;
                 header ('Location: index.php');
             }

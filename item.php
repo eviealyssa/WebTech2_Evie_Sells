@@ -8,30 +8,46 @@ Email: EASells@uclan.ac.uk
     session_start();
     require_once 'conn.php';
 
-    // get selected id
-   // $productID = isset($_GET["itemId"]) ? $_GET["itemId"] : "";
-
+    // get item details from products table
     if (isset($_GET['itemId'])) {
         $itemId = $_GET['itemId']; // Get the div ID
-        //echo "You are viewing: " . htmlspecialchars($itemId); // Echo the div ID
 
-        // Prepare SQL statement with a placeholder `?`
         $itemSql = "SELECT * FROM tbl_products WHERE product_id = ?";
-        // Prepare the statement
         $itemStmt = $connection->prepare($itemSql);
 
-        if ($itemStmt) {
-            // Bind the parameter ( "s" means string type)
+        if ($itemStmt) 
+        {
             $itemStmt->bind_param("s", $itemId);
-            
-            // Execute the statement
             $itemStmt->execute();
-            
-            // Get the result
             $itemDetails = $itemStmt->get_result();
+        } 
+        else {
+            echo "Failed to prepare statement: " . $connection->error;
+        }
 
-            
-        } else {
+
+
+
+
+    } else {
+        echo "Error has occurred";
+    }
+
+
+    // get review details from review table	
+    if (isset($_GET['itemId'])) {
+        $reviewId = $_GET['itemId']; // Get the div ID
+
+        $reviewSql = "SELECT * FROM tbl_reviews WHERE product_id = ?";
+        $reviewStmt = $connection->prepare($reviewSql);
+
+        if ($reviewStmt) 
+        {
+            $reviewStmt->bind_param("s", $reviewId);
+            $reviewStmt->execute();
+            $reviewDetails = $reviewStmt->get_result();
+        } 
+        else {
             echo "Failed to prepare statement: " . $connection->error;
         }
     } else {
@@ -90,26 +106,15 @@ Email: EASells@uclan.ac.uk
         </nav>
     </header>
 
-    <main> <!-- Clearly defines which is the main part of the web page  -->
+    <main>
 
         <div class="breakPoint"></div> <!-- adds a space to the page to break things up   -->
         <div class="breakPoint"></div>
 
-        <?php
-
-            if (isset($_GET['itemId'])) {
-                $itemId = $_GET['itemId']; // Get the div ID
-                echo "You are viewing: " . htmlspecialchars($itemId); // Echo the div ID
-            } else {
-                echo "No ID was sent!";
-            }
-        ?>
-
         <div id="itemContainer">
             <?php while ($item = $itemDetails->fetch_assoc()) 
             {
-                // adds the products to the page by querying the database base based on product type.
-                // an id is assigned to each div, equivalent to the item id from the database.
+                // adds the product to the page by querying the database base based on product id.
                 echo '<h1 id="itemTitle">' . $item["product_title"] . '</h1>';
                 echo '
                     <div id="itemCard"'. $item["product_id"] . '">
@@ -127,11 +132,92 @@ Email: EASells@uclan.ac.uk
             }?>
         </div>
 
+        <div class="breakPoint"></div> <!-- adds a space to the page to break things up   -->
+        <div class="breakPoint"></div>
 
         <div id="reviewContainer">
-            
+            <?php 
+            $totalReviewScore = 0;
+            $totalReviewCount = 0;
+            while ($review= $reviewDetails->fetch_assoc()) 
+                {
+                    // get user name
+                    $userReviewId = $review["user_id"]; // Get the review user id
 
+                    $userSql = "SELECT user_full_name FROM tbl_users WHERE user_id = ?";
+                    $userStmt = $connection->prepare($userSql);
+
+                    if ($userStmt) 
+                    {
+                        $userStmt->bind_param("i", $userReviewId);
+                        $userStmt->execute();
+                        $userDetails = $userStmt->get_result();
+                        $nameFull= $userDetails->fetch_assoc();
+                        $name = $nameFull["user_full_name"];
+                        // replaces all but the first two letters with *
+                        $reviewUserName = substr_replace($name,(str_repeat("*", (strlen($name)-2))) ,2);
+                    } 
+                    else {
+                        echo "Failed to prepare statement: " . $connection->error;
+                    }
+                    echo '
+                        <div id="reviewCard"'. $review["review_id"] . '">
+                            <h2 id="reviewName">' . $review["review_title"] . '</h2>
+                            <h3 id="reviewRating">Rating: ' . str_repeat("⭐",$review["review_rating"]) . '</h3>
+                            <p id="reviewDesc">'. $review["review_desc"] . '</p>
+                            <p id="reviewUser"> Review By '. $reviewUserName . ' at ' . $review["review_timestamp"] .'</p>
+                        </div>
+                    ';
+                    
+                    $totalReviewCount += 1; // increment count
+                    $totalReviewScore +=$review["review_rating"]; // increment rating
+                }
+
+                // calculate and display average rating
+                $averageRating = $totalReviewScore / $totalReviewCount;
+                echo "AVERAGE RATING = $averageRating";
+            ?>
         </div>
+
+        <?php if (isset($_SESSION["name"])){ ?>
+            <div id="writeReviewContainer">
+                <h2>Create your own review! </h2>
+                <form id="writeReviewForm" action="" method="post" onsubmit="">
+                    <section id="reviewSection">
+                        <p>Enter your details below:</p>
+                        
+                        <p><label>Review Title:</label>
+                        <input type="text" name="reviewTitle" required></p>
+
+                        <p><label>Review Description:</label>
+                        <input type="text" name="reviewDesc" required></p>
+
+                        <h3>Rating: </h3>
+                        <p><label>1 Star:</label>
+                        <input type="radio" name="reviewRating" required></p>
+                        <p><label>2 Star:</label>
+                        <input type="radio" name="reviewRating" required></p>
+                        <p><label>3 Star:</label>
+                        <input type="radio" name="reviewRating" required></p>
+                        <p><label>4 Star:</label>
+                        <input type="radio" name="reviewRating" required></p>
+                        <p><label>5 Star:</label>
+                        <input type="radio" name="reviewRating" required></p>
+                    
+                        <p><input type="submit" name="submitReview"></p>
+
+                    </section>
+                </form>
+                
+            </div>
+
+        <?php }else{ ?>
+            <p>Log in to write a review of your own.</p>
+        <?php }?>
+
+
+        
+
 
         
     </main>
@@ -191,6 +277,7 @@ Email: EASells@uclan.ac.uk
 
 <!-- script - JS -->
     <script>
+
         // Open / Close hamburger navigation function
         function toggleHamburgerNav()
         {
@@ -219,13 +306,7 @@ Email: EASells@uclan.ac.uk
             // go to product page
             window.open("products.php", "_self");
         }
-
-        <?php
-
-        ?>
     </script>
 
 </body>
-
-
 </html>
