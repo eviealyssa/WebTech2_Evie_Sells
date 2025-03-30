@@ -53,7 +53,6 @@ input[type=submit] {
   /* styles all buttons */
   button {
     cursor: pointer;
-
     border: solid #34516C;
     border-radius: 16px;
     outline: 0;
@@ -87,9 +86,10 @@ button:hover {
     height: 17%;
 }
 
-  /* styling all containers */
+  /* styling  container */
 .container {
     padding: 2%;
+    margin: 2%;
 }
 
 /* the "Forgot password" text */
@@ -99,7 +99,7 @@ span.password {
     margin-bottom: 4.6%;
 }
 
-/* the "Forgot password" text */
+/* the "register now" text */
 span.register {
     float: left;
     margin-top: 1%;

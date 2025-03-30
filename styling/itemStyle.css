@@ -68,3 +68,43 @@
 .itemCard .productImage:hover {
     opacity: 0.5;
 }
+
+/* for review card */
+.reviewCard {
+    margin: 2%;
+    padding: 1.5%;
+    border: solid #34516C;
+    border-radius: 16px;
+}
+
+#averageRatingContainer {
+    margin: 2%;
+    padding: 1.5%;
+    border: solid #34516C;
+    border-radius: 16px;
+    text-align: center;
+}
+
+#ratingContainer {
+    display: inline-flex;
+    padding: 2%;
+}
+
+/* for writing review */
+#writeReviewContainer {
+    margin: 2%;
+    padding: 2%;
+    border: solid #34516C;
+    border-radius: 16px;
+}
+
+.textInput {
+    width: 100%;
+    height: 40%;
+}
+
+/* for the must log in to leave a review text */
+#loginText {
+    margin:auto;
+    text-align: center;
+}

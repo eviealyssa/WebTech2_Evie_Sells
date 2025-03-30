@@ -47,6 +47,7 @@ Email: EASells@uclan.ac.uk
 
     <script>
 
+        //checks passwords to ensure they match
         function checkPasswords()
         {
             var passwordData = document.forms["registerForm"]["password"].value;
@@ -61,8 +62,6 @@ Email: EASells@uclan.ac.uk
             {
                 return true;
             }
-
-
         }
 
     </script>

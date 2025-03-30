@@ -12,7 +12,6 @@ Email: EASells@uclan.ac.uk
     <!-- link to stylesheets -->
      <link rel="stylesheet" href="styling\headFootStyle.css" type= "text/css">
      <link rel="stylesheet" href="styling\indexStyle.css" type= "text/css">
-
 </head>
 
 <body>
@@ -23,11 +22,6 @@ Email: EASells@uclan.ac.uk
     ?>
 
 <header> 
-        <!-- Semantic Elements - ACCESSIBILITY
-         Semantic elements clearly states what the content is, they are used to clearly define the parts of the web page.
-         For example header and nav. These tell both the browser and developer exactly what that section is for.        
-        -->
-
          <!-- navigation bar -->
         <nav>
              <!-- adding in logo - alternative text = - ACCESSIBILITY -->
@@ -69,7 +63,7 @@ Email: EASells@uclan.ac.uk
         <h1>Welcome to UCLan's Student Union Shop</h1>
         <div class="breakPoint"></div>
 
-        <?php
+        <?php // welcome meesage if user is logged in
         if (isset($_SESSION["name"])) 
         {
             echo "<h1> Welcome Back " . $_SESSION["name"] . "<h1>";
@@ -99,7 +93,7 @@ Email: EASells@uclan.ac.uk
 
             echo "<section id='offerCardSection'>"; // open parent tag
 
-            if ($offerCount == null) 
+            if ($offerCount == null)  // error message
             {
                 echo "offers not found";
                 echo '
@@ -110,7 +104,7 @@ Email: EASells@uclan.ac.uk
             }
             else
             {
-                while ($offerRow = $offerResult->fetch_assoc()) {
+                while ($offerRow = $offerResult->fetch_assoc()) { // displays offers in an offer card
                     echo '
                     <div class="offerCard">
                         <h3>' . $offerRow['offer_title'] . '</h3>

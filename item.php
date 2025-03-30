@@ -12,21 +12,21 @@ Email: EASells@uclan.ac.uk
     if (isset($_GET['itemId'])) {
         $itemId = $_GET['itemId']; // Get the div ID
 
-        $itemSql = "SELECT * FROM tbl_products WHERE product_id = ?";
-        $itemStmt = $connection->prepare($itemSql);
+        $itemSql = "SELECT * FROM tbl_products WHERE product_id = ?"; // create statement
+        $itemStmt = $connection->prepare($itemSql); // prepare
 
         if ($itemStmt) 
         {
-            $itemStmt->bind_param("s", $itemId);
-            $itemStmt->execute();
-            $itemDetails = $itemStmt->get_result();
+            $itemStmt->bind_param("s", $itemId); // bind
+            $itemStmt->execute(); // execute
+            $itemDetails = $itemStmt->get_result(); // get result
         } 
         else {
-            echo "Failed to prepare statement: " . $connection->error;
+            echo "Failed to prepare statement: " . $connection->error; // error
         }
 
     } else {
-        echo "Error has occurred";
+        echo "Error has occurred"; // error
     }
 
 
@@ -34,27 +34,27 @@ Email: EASells@uclan.ac.uk
     if (isset($_GET['itemId'])) {
         $reviewId = $_GET['itemId']; // Get the div ID
 
-        $reviewSql = "SELECT * FROM tbl_reviews WHERE product_id = ?";
-        $reviewStmt = $connection->prepare($reviewSql);
+        $reviewSql = "SELECT * FROM tbl_reviews WHERE product_id = ?"; // review sql statement
+        $reviewStmt = $connection->prepare($reviewSql); // prepare
 
         if ($reviewStmt) 
         {
-            $reviewStmt->bind_param("s", $reviewId);
-            $reviewStmt->execute();
-            $reviewDetails = $reviewStmt->get_result();
+            $reviewStmt->bind_param("s", $reviewId); // bind
+            $reviewStmt->execute(); // execute
+            $reviewDetails = $reviewStmt->get_result(); // get result
         } 
         else {
-            echo "Failed to prepare statement: " . $connection->error;
+            echo "Failed to prepare statement: " . $connection->error; // error
         }
     } else {
-        echo "Error has occurred";
+        echo "Error has occurred"; // error
     }
 
 
-
+    // add to cart function
     function addToCart()
     {
-        if (!isset($_SESSION["shoppingCart"])) {
+        if (!isset($_SESSION["shoppingCart"])) { // if not set, create value
             $_SESSION["shoppingCart"] = [];
         }
     
@@ -98,7 +98,7 @@ Email: EASells@uclan.ac.uk
                 ];
             }
         }
-        echo "<script>alert('Item has been added to the cart');</script>";
+        echo "<script>alert('Item has been added to the cart');</script>"; // success message
     }
     
 
@@ -162,7 +162,7 @@ Email: EASells@uclan.ac.uk
         <div id="itemContainer">
             <?php while ($item = $itemDetails->fetch_assoc()) 
             {
-                // adds the product to the page by querying the database base based on product id.
+                // adds the product to the page by querying the database base based on product id sent to the url.
                 echo '<h1 id="itemTitle">' . $item["product_title"] . '</h1>';
                 echo '
                     <div id="itemCard"'. $item["product_id"] . '">
@@ -198,33 +198,35 @@ Email: EASells@uclan.ac.uk
         <div class="breakPoint"></div> <!-- adds a space to the page to break things up   -->
         <div class="breakPoint"></div>
 
-        <div id="reviewContainer">
+        <div id="reviewContainer"> <!-- container to store the reviews -->
             <?php 
+            // initialise variables
             $totalReviewScore = 0;
             $totalReviewCount = 0;
-            while ($review= $reviewDetails->fetch_assoc()) 
+            while ($review= $reviewDetails->fetch_assoc()) // fetch reviews
                 {
-                    // get user name
+                    // get review user name from id
                     $userReviewId = $review["user_id"]; // Get the review user id
 
-                    $userSql = "SELECT user_full_name FROM tbl_users WHERE user_id = ?";
-                    $userStmt = $connection->prepare($userSql);
+                    $userSql = "SELECT user_full_name FROM tbl_users WHERE user_id = ?"; // create sql
+                    $userStmt = $connection->prepare($userSql); // prepare
 
                     if ($userStmt) 
                     {
-                        $userStmt->bind_param("i", $userReviewId);
-                        $userStmt->execute();
-                        $userDetails = $userStmt->get_result();
-                        $nameFull= $userDetails->fetch_assoc();
-                        $name = $nameFull["user_full_name"];
+                        $userStmt->bind_param("i", $userReviewId); // bind
+                        $userStmt->execute(); // execute
+                        $userDetails = $userStmt->get_result(); // get results
+                        $nameFull= $userDetails->fetch_assoc(); // fetch
+                        $name = $nameFull["user_full_name"]; // get name from id
                         // replaces all but the first two letters with *
                         $reviewUserName = substr_replace($name,(str_repeat("*", (strlen($name)-2))) ,2);
                     } 
                     else {
-                        echo "Failed to prepare statement: " . $connection->error;
+                        echo "Failed to prepare statement: " . $connection->error; // error message
                     }
+                    // review card
                     echo '
-                        <div id="reviewCard"'. $review["review_id"] . '">
+                        <div class="reviewCard"'. $review["review_id"] . '">
                             <h2 id="reviewName">' . $review["review_title"] . '</h2>
                             <h3 id="reviewRating">Rating: ' . str_repeat("⭐",$review["review_rating"]) . '</h3>
                             <p id="reviewDesc">'. $review["review_desc"] . '</p>
@@ -236,56 +238,65 @@ Email: EASells@uclan.ac.uk
                     $totalReviewScore +=$review["review_rating"]; // increment rating
                 }
 
+                // if there is a review for the item
                 if ($totalReviewCount != 0)
                 {
                     // calculate and display average rating
-                    $averageRating = $totalReviewScore / $totalReviewCount;
-                    echo "AVERAGE RATING = $averageRating";
+                    $averageRating = $totalReviewScore / $totalReviewCount; 
+                    echo '
+                    <div id="averageRatingContainer">
+                        <h3>Average Rating: ' . str_repeat("⭐", $averageRating) . '</h3>
+                    </div>
+                    ';
                 }
                 
             ?>
         </div>
 
-        <?php if (isset($_SESSION["name"])){ ?>
+        <!-- If logged in, user can write their own review -->
+        <?php if (isset($_SESSION["name"])){ 
+            echo '
             <div id="writeReviewContainer">
                 <h2>Create your own review! </h2>
-                <form id="writeReviewForm" action="" method="post" onsubmit="">
+                <form id="writeReviewForm" action="writeReviewActionPage.php" method="post" onsubmit="">
                     <section id="reviewSection">
-                        <p>Enter your details below:</p>
-                        
-                        <p><label>Review Title:</label>
-                        <input type="text" name="reviewTitle" required></p>
 
-                        <p><label>Review Description:</label>
-                        <input type="text" name="reviewDesc" required></p>
+                        <h3>Enter your details below:</h3>
+
+                        <input type="hidden" name="productId" value='.$itemId.'></p>
+                        
+                        <p><label>Review Title:</label> <br>
+                        <input type="text" name="reviewTitle" class="textInput" required></p>
+
+                        <p><label>Review Description:</label> <br>
+                        <input type="text" name="reviewDesc" class="textInput" required></p>
 
                         <h3>Rating: </h3>
-                        <p><label>1 Star:</label>
-                        <input type="radio" name="reviewRating" required></p>
-                        <p><label>2 Star:</label>
-                        <input type="radio" name="reviewRating" required></p>
-                        <p><label>3 Star:</label>
-                        <input type="radio" name="reviewRating" required></p>
-                        <p><label>4 Star:</label>
-                        <input type="radio" name="reviewRating" required></p>
-                        <p><label>5 Star:</label>
-                        <input type="radio" name="reviewRating" required></p>
-                    
-                        <p><input type="submit" name="submitReview"></p>
+                        <div id="ratingContainer">
+                            <p><label>1 Star: </label>
+                            <input type="radio" name="reviewRating" value="1" required>   </p>
+                            <p><label>2 Star: </label>
+                            <input type="radio" name="reviewRating" value="2" required>   </p>
+                            <p><label>3 Star: </label>
+                            <input type="radio" name="reviewRating" value="3" required>   </p>
+                            <p><label>4 Star: </label>
+                            <input type="radio" name="reviewRating" value="4" required>   </p>
+                            <p><label>5 Star: </label>
+                            <input type="radio" name="reviewRating" value="5" required>   </p>
+                        </div>
+                        
+                        <p><input class="addToBagBtn" type="submit" name="submitReview"></p>
 
                     </section>
                 </form>
                 
             </div>
+            ';
 
-        <?php }else{ ?>
-            <h2>Log in to write a review of your own.</h2>
-        <?php }?>
-
-
-        
-
-
+        }else{
+            echo '<h2 id="loginText">Log in to write a review of your own.</h2>'; // display message to user to log in to write their own review
+        }
+        ?>
         
     </main>
 

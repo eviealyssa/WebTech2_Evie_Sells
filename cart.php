@@ -1,6 +1,13 @@
+<!-- 
+Evie Sells
+Reg No. 21255921
+Email: EASells@uclan.ac.uk 
+-->
+
 <?php
     session_start();
 
+    // increases the quantity of the product
     function increaseQuantity()
     {
         $productId = $_POST["increaseQuantity"];
@@ -9,19 +16,27 @@
         }
     }
 
+    // decreases the quantity of the product
     function decreaseQuantity()
     {
         $productId = $_POST["decreaseQuantity"];
         if (isset($_SESSION['shoppingCart'][$productId])) {
-            if ( $_SESSION['shoppingCart'][$productId]['product_quantity'] == 1)
+            if ( $_SESSION['shoppingCart'][$productId]['product_quantity'] == 1) // if quantity = 1
             {
                 unset( $_SESSION['shoppingCart'][$productId]); // remove from cart
             }
             else
             {
-                $_SESSION['shoppingCart'][$productId]['product_quantity'] -= 1;
+                $_SESSION['shoppingCart'][$productId]['product_quantity'] -= 1; // decrease quantity
             }
         }
+    }
+
+    // clear cart
+    function clearCart()
+    {
+        $_SESSION['shoppingCart'] = []; // clear variable
+        echo "<script>window.location.href = 'cart.php';</script>"; // reload page
     }
 
 ?>
@@ -79,9 +94,8 @@
         <div class="breakPoint"></div> <!-- adds a space to the page to break things up   -->
         <div class="breakPoint"></div>
 
-
         <?php
-            if (!empty($_SESSION["shoppingCart"]))
+            if (!empty($_SESSION["shoppingCart"])) // if shopping cart has products in
             {
                 // if items in cart - display
                 $totalPrice = 0;
@@ -92,6 +106,7 @@
                 {
                     $totalPrice += $item["product_price"] * $item['product_quantity'];
 
+                    // display items in an item card
                     echo '<div class="itemCartCard">
                             <div class="itemImage">
                                 <img src="' . $item["product_image"] . '" alt="' . $item["product_title"] . '" style="width: 75%">
@@ -122,15 +137,30 @@
                     ';
                 }
                 echo "</section>"; // close
-                echo "
-                    <h2> Total: $totalPrice 
-                    <button id='totalPrice'>Checkout</button>
-                    ";
+                // form to 'checkout' cart
+                echo '
+                    <form id="checkoutDiv" method="POST" action="checkoutActionPage.php">
+                        <input type="hidden" name="checkout" value='.$totalPrice.'>
+                        <button id="totalPrice" type="submit">Total: £'.$totalPrice.'. Checkout Now!</button>
+                    </form>
+                ';
 
-                echo "<button id='clearCart' onclick='clearCart()'>  Clear cart </button>";                
+                // button to clear the cart
+                echo '
+                <form id="clearCart" method="POST" action="">
+                    <input type="hidden" name="clearCart" value="clear">
+                    <button id="clearCartBtn" type="submit">Clear cart</button>
+                </form>
+                ';     
             }
             else{
                 echo "<h1 id='bagEmptyText'>Your cart is empty</h1>"; // if bag is empty - display message
+            }
+
+            // If clear cart button is clicked
+            if (isset($_POST["clearCart"]))
+            {
+                clearCart(); // go to function
             }
 
             // If add to increase quantity button clicked,
@@ -148,7 +178,6 @@
                 unset($_POST["decreaseQuantity"]); // unset variable
                 $_POST["increaseQuantity"] = array();
             }
-
         ?>
 
         <!-- reactive to fill page so footer is always at the bottom of the page, under the content -->
@@ -211,19 +240,6 @@
         </div>
     </footer>
 
-    <?php
-
-        function clearCart()
-        {
-            // set cart to empty
-            $_SESSION["shoppingCart"] = []; // cart has been cleared
-
-            // reload page
-            header("Location: cart.php"); 
-        }
-    ?>
-
-
     <!-- script - JS -->
     <script>
 
@@ -246,19 +262,16 @@
         // determines and sets the size of the filler box
         function changeFillerSize()
         {
-            var pageSize = window.innerHeight;
-            
-           
-           
+            var pageSize = window.innerHeight; // get window size
 
-            if (!document.getElementById("itemCartContainer")) 
+            if (!document.getElementById("itemCartContainer")) // if does not exist
             {
-                var containerSize = document.getElementById("bagEmptyText").offsetHeight  ?? 0;
+                var containerSize = document.getElementById("bagEmptyText").offsetHeight  ?? 0; // get height of text
             }
             else
             {
-                var containerSize = document.getElementById("itemCartContainer").offsetHeight  ?? 0;
-                var totalPrice = document.getElementById('totalPrice').offsetHeight  ?? 0;
+                var containerSize = document.getElementById("itemCartContainer").offsetHeight  ?? 0; // get height of container
+                var totalPrice = document.getElementById('checkoutDiv').offsetHeight  ?? 0; // get height of price button
                 containerSize += totalPrice;
             }
 
@@ -270,9 +283,9 @@
                 breakHeight = breakHeight + temp;
             }
 
-            var headerHeight = document.getElementsByTagName("header")[0].offsetHeight;
+            var headerHeight = document.getElementsByTagName("header")[0].offsetHeight; // get header height
 
-            var footerHeight = document.getElementsByTagName("footer")[0].offsetHeight;
+            var footerHeight = document.getElementsByTagName("footer")[0].offsetHeight; // get footer height
 
             var toTake = footerHeight + headerHeight + breakHeight + containerSize;
 
@@ -280,7 +293,7 @@
 
 
             if (toTake > 0){
-                document.getElementById("fillerBox").style.height = fillerBoxSize + "px";
+                document.getElementById("fillerBox").style.height = fillerBoxSize + "px"; // sset height of filler box
             }
 
         }

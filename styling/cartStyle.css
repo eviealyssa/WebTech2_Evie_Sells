@@ -85,21 +85,21 @@
     padding: 10px;
     margin: 10px;
     float: right;
+    display: inline-flex;
 }
 
-
-/* #bagEmptyBtn {
+#clearCartBtn {
     border: solid #577A9B;
     border-radius: 25px;
     background-color: #577A9B; 
     color: white;
     font-size: 100%;
-    width: 50%;
+    width: 30%;
     padding: 10px;
     margin-left: 25%;
     margin-right: 25%;
 }
 
-#bagEmptyBtn:hover {
+#clearCartBtn:hover {
     opacity: 0.7;
-} */
+}

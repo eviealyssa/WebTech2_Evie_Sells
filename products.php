@@ -9,27 +9,28 @@ Email: EASells@uclan.ac.uk
     require_once 'conn.php';
 
     // get selected filter
-    $productType = isset($_GET["productType"]) ? $_GET["productType"] : "";
+    // https://www.w3schools.com/php/php_if_shorthand.asp
+    $productType = isset($_GET["productType"]) ? $_GET["productType"] : ""; // using short hand if else
 
     // Prepare Query
     $sql = "SELECT * FROM tbl_products";
-    if (!empty($productType)) 
+    if (!empty($productType)) // if type has been selected
     {
         $sql .= " WHERE product_type = ?"; // add where clause, if productType is not empty
         $stmt = $connection->prepare($sql); // prepare query
         $stmt->bind_param("s", $productType); // bind param
     } else {
-        $stmt = $connection->prepare($sql);
+        $stmt = $connection->prepare($sql); // if no type (all)
     }
     $stmt->execute(); // execute query
     $result = $stmt->get_result(); // get the result
 
 
 
-
+    // adds selected item to cart
     function addToCart()
     {
-        if (!isset($_SESSION["shoppingCart"])) {
+        if (!isset($_SESSION["shoppingCart"])) { // if not set, create variable
             $_SESSION["shoppingCart"] = [];
         }
     
@@ -41,6 +42,7 @@ Email: EASells@uclan.ac.uk
     
         // Check if the addToCart is set
         if (isset($_POST['addToCart'])) {
+            // get variables from product form
             $cartAction = $_POST['addToCart'];
             $product_id = $_POST['product_id'];
             $product_title = $_POST['product_title'];
@@ -73,7 +75,7 @@ Email: EASells@uclan.ac.uk
                 ];
             }
         }
-        echo "<script>alert('Item has been added to the cart');</script>";
+        echo "<script>alert('Item has been added to the cart');</script>"; // success message
     }
     
 ?>
@@ -143,9 +145,9 @@ Email: EASells@uclan.ac.uk
             <h3>Filter by Type: </h3>
             <ul class="productFiltersList">
                 <!-- ? is a ternary operator, essentially a short-hand if statement -->
-                <li onclick="filterProducts('')" class="filterList <?= empty($productType) ? 'activeFilter' : '' ?>">All</li> 
+                <li onclick="filterProducts('')" class="filterList <?= empty($productType) ? 'activeFilter' : '' ?>">All</li>
                 <li onclick="filterProducts('UCLan Logo Tshirt')" class="filterList <?= $productType == 'UCLan Logo Tshirt' ? 'activeFilter' : '' ?>">Tshirt</li>
-                <li onclick="filterProducts('UCLan Hoodie')" class=" filterList <?= $productType == 'UCLan Hoodie' ? 'activeFilter' : '' ?>">Hoodys</li>
+                <li onclick="filterProducts('UCLan Hoodie')" class=" filterList <?= $productType == 'UCLan Hoodie' ? 'activeFilter' : '' ?>">Hoodies</li>
                 <li onclick="filterProducts('UCLan Logo Jumper')" class=" filterList <?= $productType == 'UCLan Logo Jumper' ? 'activeFilter' : '' ?>">Jumpers</li>
             </ul>
         </div>
@@ -161,6 +163,7 @@ Email: EASells@uclan.ac.uk
             {
                 // adds the products to the page by querying the database base based on product type.
                 // an id is assigned to each div, equivalent to the item id from the database.
+                // a form is used to add the item to the cart whenbutton is pressed.
                 echo '
                     <div class="productCard"'. $row["product_id"] . '">
                         <img class ="productImage" src="' . $row["product_image"] . '" alt="' . $row["product_title"] . '" style="width: 100%"> 
@@ -248,9 +251,8 @@ Email: EASells@uclan.ac.uk
 <!-- script - JS -->
     <script>
         
-        // filters products
+        // filters products, encode type to url
         function filterProducts(type) {
-            console.log("filter products called, type = ", type);
             window.location.href = "?productType=" + encodeURIComponent(type);
         }
 
@@ -276,17 +278,10 @@ Email: EASells@uclan.ac.uk
             window.scrollTo(0,0);
         }
 
-        // adds selected item to the cart
-        function addToCart(button)
-        {
-            var divId = button.parentElement.id; // gets the id of the div
-            console.log("id = ", divId);
-        }
-
+        // go to item page, adding item id to the url
         function toItemPage(itemId)
         {
-            console.log("id = ", itemId);
-            window.location.href = "item.php?itemId=" + itemId;
+            window.location.href = "item.php?itemId=" + encodeURIComponent(itemId);
         }
 
         <?php
