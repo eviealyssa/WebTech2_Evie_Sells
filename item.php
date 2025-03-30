@@ -25,10 +25,6 @@ Email: EASells@uclan.ac.uk
             echo "Failed to prepare statement: " . $connection->error;
         }
 
-
-
-
-
     } else {
         echo "Error has occurred";
     }
@@ -53,6 +49,58 @@ Email: EASells@uclan.ac.uk
     } else {
         echo "Error has occurred";
     }
+
+
+
+    function addToCart()
+    {
+        if (!isset($_SESSION["shoppingCart"])) {
+            $_SESSION["shoppingCart"] = [];
+        }
+    
+        // https://phppot.com/php/simple-php-shopping-cart/
+    
+        // https://stackoverflow.com/questions/62906258/shopping-cart-using-php-session
+    
+        // https://www.geeksforgeeks.org/what-is-the-use-of-symbol-in-php/
+    
+        // Check if the addToCart is set
+        if (isset($_POST['addToCart'])) {
+            $cartAction = $_POST['addToCart'];
+            $product_id = $_POST['product_id'];
+            $product_title = $_POST['product_title'];
+            $product_price = $_POST['product_price'];
+            $product_image = $_POST['product_image'];
+    
+            if (isset($_POST['product_quantity'])) // if quantity is already set
+            {
+                $product_quantity = $_POST['product_quantity']; // assign value
+            }
+            else
+            {
+                $product_quantity = 1; // if quantity is not set, assign it to 1
+            }
+    
+            // add item to cart
+            if (isset($_SESSION["shoppingCart"][$product_id])) // if cart already exists, and item is already in it, add item by assigning key value pairs
+            {
+                $_SESSION["shoppingCart"][$product_id]["product_quantity"] += $product_quantity; // increase quanitity
+            }
+            else
+            {
+                $_SESSION["shoppingCart"][$product_id] =  // if item is not already in cart, add as a key-value array
+                [
+                    "product_id" =>$product_id,
+                    "product_title" =>$product_title,
+                    "product_price" =>$product_price,
+                    "product_image" =>$product_image,
+                    "product_quantity" =>$product_quantity,
+                ];
+            }
+        }
+        echo "<script>alert('Item has been added to the cart');</script>";
+    }
+    
 
 ?>
 
@@ -86,7 +134,7 @@ Email: EASells@uclan.ac.uk
             </div>
 
             <!-- cart menu icon for desktop / tablet -->
-            <a href="cart.html" class="splitNav cartNavIcon"><img src="images\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
+            <a href="cart.php" class="splitNav cartNavIcon"><img src="images\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
 
             <!-- login menu icon for desktop / tablet -->
             <a href="login.php" class="splitNav loginNavIcon"><img src="images\other\login sybol nav.png" alt="Login" height="50"></a>
@@ -126,18 +174,24 @@ Email: EASells@uclan.ac.uk
                         <p id="productDescription">'. $item["product_desc"] . '</p>
 
 
-                        <form method="POST" action="cart.php">
+                        <form method="POST" action="">
                             <input type="hidden" name="addToCart" value="add">
                             <input type="hidden" name="product_image" value="' . $item["product_image"] . '">
                             <input type="hidden" name="product_id" value="' . $item["product_id"] . '">
                             <input type="hidden" name="product_title" value="' . $item["product_title"] . '">
                             <input type="hidden" name="product_price" value="' . $item["product_price"] . '">
-                            <button class="addToBagBtn" type="submit">Add to Cart</button>
+                            <button class="addToBagBtn" type="itemAddedToCart">Add to Cart</button>
                         </form>
                     </div>
                 ';
                 // Close the statement
                 $itemStmt->close();
+
+                // If add to cart button clicked,
+                if (isset($_POST["addToCart"]))
+                {
+                    addToCart(); // go to addtoCart function
+                }
             }?>
         </div>
 
@@ -182,9 +236,13 @@ Email: EASells@uclan.ac.uk
                     $totalReviewScore +=$review["review_rating"]; // increment rating
                 }
 
-                // calculate and display average rating
-                $averageRating = $totalReviewScore / $totalReviewCount;
-                echo "AVERAGE RATING = $averageRating";
+                if ($totalReviewCount != 0)
+                {
+                    // calculate and display average rating
+                    $averageRating = $totalReviewScore / $totalReviewCount;
+                    echo "AVERAGE RATING = $averageRating";
+                }
+                
             ?>
         </div>
 
@@ -221,7 +279,7 @@ Email: EASells@uclan.ac.uk
             </div>
 
         <?php }else{ ?>
-            <p>Log in to write a review of your own.</p>
+            <h2>Log in to write a review of your own.</h2>
         <?php }?>
 
 
