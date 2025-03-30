@@ -4,7 +4,6 @@
 
         $orderDate = date('Y-m-d'); // gets the timestamp in the format = (yyyy-mm-dd) - https://www.w3schools.com/php/func_date_date_format.asp
 
-
         // get user id
         $userId = $_SESSION["userID"];
 
@@ -31,15 +30,17 @@
         // execuet the statement
         if($insertStmt->execute())
         {
-            echo "<script>alert('Order has been sucessfully created')</script>"; // success message
+            echo "<script>alert(Order has been sucessfully created)</script>"; // success message
             unset($_SESSION["shoppingCart"]); // unset cart
+            unset($_SESSION["jumperOffer"]);
+            unset($_SESSION["tshirtOffer"]);
 
             header ('Location: index.php'); // to index page
         }
         else
         {
             echo "<script>alert(Error has occurred, please try again.)</script>"; // error message
-            //header ('Location: cart.php');
+            header ('Location: cart.php');
         }
 
         // close

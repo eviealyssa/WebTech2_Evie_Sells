@@ -99,12 +99,39 @@ Email: EASells@uclan.ac.uk
             {
                 // if items in cart - display
                 $totalPrice = 0;
+                $tshirtCount = 0;
 
                 echo "<section id='itemCartContainer'>"; // open
 
                 foreach ($_SESSION["shoppingCart"] as $product_id=>$item) // loop through cart and display each item
                 {
-                    $totalPrice += $item["product_price"] * $item['product_quantity'];
+                    // offer 1 - All jumpers are 25% off. Discount will be applied at checkout
+                    if ($item["product_id"] >= 21 && $item["product_id"] <=30)// if a hoody
+                    {
+                        $price = $item["product_price"] * 0.75;
+                        $price = round($price, 2); // round
+                        $_SESSION["jumperOffer"] = true;
+                    }
+                    else
+                    {
+                        $price = $item["product_price"];
+                    }
+
+
+                    // offer 2 - All T-shirts are buy 1 get 1 half-price.
+                    if($item["product_id"] >= 1 && $item["product_id"] <=10)// if a tshirt
+                    {
+                        $tshirtCount += 1; // increase count
+
+                        if ($tshirtCount == 2) // if two tshirts
+                        {
+                            $price = $item["product_price"] * 0.5; // get second one half price
+                            $_SESSION["tshirtOffer"] = true;
+                            $tshirtCount = 0; // reset count
+                        }
+                    }
+
+                    $totalPrice +=  $price * $item['product_quantity'];
 
                     // display items in an item card
                     echo '<div class="itemCartCard">
@@ -113,7 +140,7 @@ Email: EASells@uclan.ac.uk
                             </div> 
                             <div class="itemCartInfo">
                                 <h2 class="productName">' . $item["product_title"] . '</h2>
-                                <h3 class="productPrice">£' . $item["product_price"] . '</h3>
+                                <h3 class="productPrice">£' .  $price . '</h3>
                             </div> 
                             <div class="itemCartQuanity">
                                <h2 class="itemCartQuantityText">Quantity</h2>
@@ -137,6 +164,54 @@ Email: EASells@uclan.ac.uk
                     ';
                 }
                 echo "</section>"; // close
+
+
+                if(isset($_SESSION["jumperOffer"]))
+                {
+                    if ($_SESSION["jumperOffer"] == true)
+                    {
+                        echo '
+                        <section id="offers">
+                            <h3>Offer applied: All jumpers 25% off</h3> 
+                            <br>                  
+                        </section>
+                        ';
+                    }
+                }
+
+                if(isset($_SESSION["tshirtOffer"]))
+                {
+                    if ($_SESSION["tshirtOffer"] == true)
+                    {
+                        echo '
+                        <section id="offers">
+                            <h3>Offer applied: Buy 1 tshirt, get the 2nd half price</h3>     
+                            <br>              
+                        </section>
+                        ';
+                    }
+                }
+
+                // promocode form
+                echo '
+                <form id="promoCodeForm" method="POST" action="">
+                    <p><label>Promo Code:</label>
+                    <input type="text" name="promoCode"></p>
+                </form>
+                ';
+
+                if(isset($_POST["promoCode"]))
+                {
+                    if($_POST["promoCode"] == "GRAD25")
+                    {
+                        $totalPrice = $totalPrice *0.75; // apply 25% discount
+                        $totalPrice = round($totalPrice, 2); // round
+                        echo "GRAD25 promocode applied";
+                    }
+                }
+                
+
+
                 // form to 'checkout' cart
                 echo '
                     <form id="checkoutDiv" method="POST" action="checkoutActionPage.php">
@@ -179,9 +254,11 @@ Email: EASells@uclan.ac.uk
                 $_POST["increaseQuantity"] = array();
             }
         ?>
+        <div class="breakPoint"></div> <!-- adds a space to the page to break things up   -->
 
         <!-- reactive to fill page so footer is always at the bottom of the page, under the content -->
         <div id="fillerBox"></div>
+
 
 
 

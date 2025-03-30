@@ -3,7 +3,7 @@
         require_once 'conn.php';
 
         // prevents against security issues
-        $timestamp = date('Y-m-d'); // gets the timestamp in the format = (yyyy-mm-dd) - https://www.w3schools.com/php/func_date_date_format.asp
+        $timestamp = date('Y-m-d H:i:s'); // gets the timestamp in the format = (yyyy-mm-dd) - https://www.w3schools.com/php/func_date_date_format.asp
         $userId = $_SESSION["userID"];
         $productId = ($_POST["productId"]);
         $reviewTitle = htmlspecialchars($_POST["reviewTitle"]);
