@@ -147,7 +147,7 @@ Email: EASells@uclan.ac.uk
                 <ul class="mobileNavLinksList">
                     <li><a href="index.php" target="_self" class="navLinks">Home</a></li>
                     <li><a href="products.php" target="_self" class="navLinks">Products</a></li>
-                    <li><a href="cart.html" target="_self" class="navLinks">Cart</a></li> 
+                    <li><a href="cart.php" target="_self" class="navLinks">Cart</a></li> 
                     <li><a href="login.php" target="_self" class="navLinks">Login</a></li> 
                 </ul>
             </div> 

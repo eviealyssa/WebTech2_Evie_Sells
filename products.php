@@ -23,6 +23,59 @@ Email: EASells@uclan.ac.uk
     }
     $stmt->execute(); // execute query
     $result = $stmt->get_result(); // get the result
+
+
+
+
+    function addToCart()
+    {
+        if (!isset($_SESSION["shoppingCart"])) {
+            $_SESSION["shoppingCart"] = [];
+        }
+    
+        // https://phppot.com/php/simple-php-shopping-cart/
+    
+        // https://stackoverflow.com/questions/62906258/shopping-cart-using-php-session
+    
+        // https://www.geeksforgeeks.org/what-is-the-use-of-symbol-in-php/
+    
+        // Check if the addToCart is set
+        if (isset($_POST['addToCart'])) {
+            $cartAction = $_POST['addToCart'];
+            $product_id = $_POST['product_id'];
+            $product_title = $_POST['product_title'];
+            $product_price = $_POST['product_price'];
+            $product_image = $_POST['product_image'];
+    
+            if (isset($_POST['product_quantity'])) // if quantity is already set
+            {
+                $product_quantity = $_POST['product_quantity']; // assign value
+            }
+            else
+            {
+                $product_quantity = 1; // if quantity is not set, assign it to 1
+            }
+    
+            // add item to cart
+            if (isset($_SESSION["shoppingCart"][$product_id])) // if cart already exists, and item is already in it, add item by assigning key value pairs
+            {
+                $_SESSION["shoppingCart"][$product_id]["product_quantity"] += $product_quantity; // increase quanitity
+            }
+            else
+            {
+                $_SESSION["shoppingCart"][$product_id] =  // if item is not already in cart, add as a key-value array
+                [
+                    "product_id" =>$product_id,
+                    "product_title" =>$product_title,
+                    "product_price" =>$product_price,
+                    "product_image" =>$product_image,
+                    "product_quantity" =>$product_quantity,
+                ];
+            }
+        }
+        echo "<script>alert('Item has been added to the cart');</script>";
+    }
+    
 ?>
 
 <!-- ACCESSIBILITY - declare the language -->
@@ -56,7 +109,7 @@ Email: EASells@uclan.ac.uk
             </div>
 
             <!-- cart menu icon for desktop / tablet -->
-            <a href="cart.html" class="splitNav cartNavIcon"><img src="images\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
+            <a href="cart.php" class="splitNav cartNavIcon"><img src="images\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
 
             <!-- login menu icon for desktop / tablet -->
             <a href="login.php" class="splitNav loginNavIcon"><img src="images\other\login sybol nav.png" alt="Login" height="50"></a>
@@ -69,7 +122,7 @@ Email: EASells@uclan.ac.uk
                 <ul class="mobileNavLinksList">
                     <li><a href="index.php" target="_self" class="navLinks">Home</a></li>
                     <li><a href="products.php" target="_self" class="navLinks activePage">Products</a></li>
-                    <li><a href="cart.html" target="_self" class="navLinks">Cart</a></li> 
+                    <li><a href="cart.php" target="_self" class="navLinks">Cart</a></li> 
                     <li><a href="login.php" target="_self" class="navLinks">Login</a></li> 
                 </ul>
             </div> 
@@ -115,10 +168,27 @@ Email: EASells@uclan.ac.uk
                         <h3 class="productPrice">£' . $row["product_price"] . '</h3>
                         <p class="productDescription">'. $row["product_desc"] . '</p>
                         <a class="readMoreLink" onclick="toItemPage(' . $row["product_id"] . ')">' . "Read more..." . '</a>
-                        <button class="addToBagBtn" onclick="addToCart(this)">Add to Cart</button>
+
+
+                        <form method="POST" action="">
+                            <input type="hidden" name="addToCart" value="add">
+                            <input type="hidden" name="product_image" value="' . $row["product_image"] . '">
+                            <input type="hidden" name="product_id" value="' . $row["product_id"] . '">
+                            <input type="hidden" name="product_title" value="' . $row["product_title"] . '">
+                            <input type="hidden" name="product_price" value="' . $row["product_price"] . '">
+                            <button class="addToBagBtn" type="itemAddedToCart">Add to Cart</button>
+                        </form>
                     </div>
                 ';
-            }?>
+            }
+            
+            // If add to cart button clicked,
+            if (isset($_POST["addToCart"]))
+            {
+                addToCart(); // go to addtoCart function
+            }
+            
+            ?>
         </div>
     </main>
 

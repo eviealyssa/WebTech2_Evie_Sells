@@ -1,5 +1,29 @@
 <?php
     session_start();
+
+    function increaseQuantity()
+    {
+        $productId = $_POST["increaseQuantity"];
+        if (isset($_SESSION['shoppingCart'][$productId])) {
+            $_SESSION['shoppingCart'][$productId]['product_quantity'] += 1;
+        }
+    }
+
+    function decreaseQuantity()
+    {
+        $productId = $_POST["decreaseQuantity"];
+        if (isset($_SESSION['shoppingCart'][$productId])) {
+            if ( $_SESSION['shoppingCart'][$productId]['product_quantity'] == 1)
+            {
+                unset( $_SESSION['shoppingCart'][$productId]); // remove from cart
+            }
+            else
+            {
+                $_SESSION['shoppingCart'][$productId]['product_quantity'] -= 1;
+            }
+        }
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -81,8 +105,16 @@
                                <h2 class="itemCartQuantityInfo">' . $item["product_quantity"] .'</h2>
         
                                <div class="quantityBtnsContainer">
-                                   <button class="quantityBtn" onclick="increaseQuantity(this)">+</button>
-                                   <button class="quantityBtn" onclick="decreaseQuantity(this)">-</button>
+
+                                    <form method="POST" action="">
+                                        <input type="hidden" name="increaseQuantity" value='.$item["product_id"].'>
+                                        <button class="quantityBtn" type="submit">+</button>
+                                    </form>
+
+                                    <form method="POST" action="">
+                                        <input type="hidden" name="decreaseQuantity" value='.$item["product_id"].'>
+                                        <button class="quantityBtn" type="submit">-</button>
+                                    </form>
                                </div>
                            </div>
                         
@@ -90,13 +122,33 @@
                     ';
                 }
                 echo "</section>"; // close
-                echo "<button id='totalPrice'>  Total: $totalPrice  </button>";
+                echo "
+                    <h2> Total: $totalPrice 
+                    <button id='totalPrice'>Checkout</button>
+                    ";
 
-                echo "<button id='clearCart' onclick='clearCart()'>  Clear cart </button>";
+                echo "<button id='clearCart' onclick='clearCart()'>  Clear cart </button>";                
             }
             else{
                 echo "<h1 id='bagEmptyText'>Your cart is empty</h1>"; // if bag is empty - display message
             }
+
+            // If add to increase quantity button clicked,
+            if (isset($_POST["increaseQuantity"]))
+            {
+                increaseQuantity(); // go to function
+                unset($_POST["increaseQuantity"]); // unset variable
+                $_POST["increaseQuantity"] = array();
+            }
+
+            // If add to decrease quantity button clicked,
+            if (isset($_POST["decreaseQuantity"]))
+            {
+                decreaseQuantity(); // go to function
+                unset($_POST["decreaseQuantity"]); // unset variable
+                $_POST["increaseQuantity"] = array();
+            }
+
         ?>
 
         <!-- reactive to fill page so footer is always at the bottom of the page, under the content -->
@@ -169,7 +221,6 @@
             // reload page
             header("Location: cart.php"); 
         }
-
     ?>
 
 
@@ -196,15 +247,19 @@
         function changeFillerSize()
         {
             var pageSize = window.innerHeight;
-            var totalPrice = document.getElementById('totalPrice').offsetHeight;
+            
+           
+           
 
-            if(document.getElementById("itemCartContainer").offsetHeight == null)
+            if (!document.getElementById("itemCartContainer")) 
             {
-                var containerSize = document.getElementById("bagEmptyText").offsetHeight;
+                var containerSize = document.getElementById("bagEmptyText").offsetHeight  ?? 0;
             }
             else
             {
-                var containerSize = document.getElementById("itemCartContainer").offsetHeight;
+                var containerSize = document.getElementById("itemCartContainer").offsetHeight  ?? 0;
+                var totalPrice = document.getElementById('totalPrice').offsetHeight  ?? 0;
+                containerSize += totalPrice;
             }
 
             // get height of all breakpoints
@@ -219,7 +274,7 @@
 
             var footerHeight = document.getElementsByTagName("footer")[0].offsetHeight;
 
-            var toTake = footerHeight + headerHeight  + totalPrice + breakHeight + containerSize;
+            var toTake = footerHeight + headerHeight + breakHeight + containerSize;
 
             var fillerBoxSize = (pageSize - toTake);
 

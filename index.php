@@ -45,7 +45,7 @@ Email: EASells@uclan.ac.uk
             </div>
 
             <!-- cart menu icon for desktop / tablet -->
-            <a href="cart.html" class="splitNav cartNavIcon"><img src="images\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
+            <a href="cart.php" class="splitNav cartNavIcon"><img src="images\other\shopping-cart-image.svg" alt="Cart" height="50"></a>
 
             <!-- login menu icon for desktop / tablet -->
             <a href="login.php" class="splitNav loginNavIcon"><img src="images\other\login sybol nav.png" alt="Login" height="50"></a>
@@ -58,7 +58,7 @@ Email: EASells@uclan.ac.uk
                 <ul class="mobileNavLinksList">
                     <li><a href="index.php" target="_self" class="navLinks activePage">Home</a></li>
                     <li><a href="products.php" target="_self" class="navLinks">Products</a></li>
-                    <li><a href="cart.html" target="_self" class="navLinks">Cart</a></li> 
+                    <li><a href="cart.php" target="_self" class="navLinks">Cart</a></li> 
                     <li><a href="login.php" target="_self" class="navLinks">Login</a></li> 
                 </ul>
             </div> 
