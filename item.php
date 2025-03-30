@@ -124,7 +124,16 @@ Email: EASells@uclan.ac.uk
                         <h2 id="productName">' . $item["product_title"] . '</h2>
                         <h3 id="productPrice">£' . $item["product_price"] . '</h3>
                         <p id="productDescription">'. $item["product_desc"] . '</p>
-                        <button class="addToBagBtn" onclick="addToCart(this)">Add to Cart</button>
+
+
+                        <form method="POST" action="cart.php">
+                            <input type="hidden" name="addToCart" value="add">
+                            <input type="hidden" name="product_image" value="' . $item["product_image"] . '">
+                            <input type="hidden" name="product_id" value="' . $item["product_id"] . '">
+                            <input type="hidden" name="product_title" value="' . $item["product_title"] . '">
+                            <input type="hidden" name="product_price" value="' . $item["product_price"] . '">
+                            <button class="addToBagBtn" type="submit">Add to Cart</button>
+                        </form>
                     </div>
                 ';
                 // Close the statement
@@ -291,20 +300,6 @@ Email: EASells@uclan.ac.uk
             else {
                 navigationSection.style.display = "block";
             }
-        }
-
-        // adds selected item to the cart
-        function addToCart(button)
-        {
-            var divId = button.parentElement.id; // gets the id of the div
-            console.log("id = ", divId);
-        }
-
-        function backToPage()
-        {
-            //window.location.href = "item.php?itemId=" + itemId;
-            // go to product page
-            window.open("products.php", "_self");
         }
     </script>
 
