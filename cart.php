@@ -211,14 +211,25 @@ Email: EASells@uclan.ac.uk
                 }
                 
 
-
-                // form to 'checkout' cart
-                echo '
+                if (isset($_SESSION["name"])) // can only check out if user is logged in
+                {
+                    // form to 'checkout' cart
+                    echo '
                     <form id="checkoutDiv" method="POST" action="checkoutActionPage.php">
                         <input type="hidden" name="checkout" value='.$totalPrice.'>
                         <button id="totalPrice" type="submit">Total: £'.$totalPrice.'. Checkout Now!</button>
                     </form>
-                ';
+                    ';
+                }
+                else
+                {
+                    echo '
+                    <div id="checkoutDiv">
+                        <h3> Log in to check out cart </h3>
+                    </div>
+                    ';
+                }
+               
 
                 // button to clear the cart
                 echo '
